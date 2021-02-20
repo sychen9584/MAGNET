@@ -10,7 +10,8 @@ db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES = {'default':{}}
 DATABASES['default'].update(db_from_env)
 
-ALLOWED_HOSTS = ["magnet.herokuapp.com"]
+ALLOWED_HOSTS = ["blooming-peak-08320.herokuapp.com",
+                    "magnet.herokuapp.com"]
 
 CELERY_BROKER_URL = os.environ['REDIS_URL']
 CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
