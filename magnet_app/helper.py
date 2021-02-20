@@ -403,8 +403,7 @@ def construct_network_elements(df, user_cluster):
     #clusters = Cluster.objects.filter(dataset__in=datasets).prefetch_related('dataset') # get all associated clusters
     dataset_list = df.dataset_id.unique()
     cluster_list = df.cluster_id.unique()
-    #print(dataset_list)
-    #print(cluster_list)
+
     network_elements = {}
 
     network_elements["dataset_nodes"] = [get_dataset_node_elements(df, d) for d in dataset_list]
@@ -430,7 +429,8 @@ def get_dataset_node_elements(df, dataset):
 
 def get_cluster_node_elements(df, user_cluster, cluster):
 
-    df_filtered = df[(df.cluster_id==int(cluster)) & (df.user_cluster == int(user_cluster))]
+    df_filtered = df[(df.cluster_id==cluster) & (df.user_cluster == user_cluster)]
+    
     
     return {
         'data': {'id': 'cluster_'+ str(df_filtered.cluster_id.values[0]), 

@@ -158,9 +158,10 @@ app.layout = html.Div([
                                 id="sig", className="container tab-pane active"),
                                 
                         html.Div(html.Div(
-                            [dcc.Dropdown(id='network-dropdown', clearable=False),
-                            # Hidden div inside the app that stores the intermediate value
-                            html.Div(id='hidden-df', style={'display': 'none'}),
+                            [html.Div(dcc.RadioItems(id="hidden_input", 
+                                        options=[{'label': 'x', 'value': 'y'},]),
+                                        style={"display":'None'}),
+                            dcc.Dropdown(id='network-dropdown', clearable=False),
                             html.Div(id='network'),
                             html.Hr(),
                             dbc.Container(
@@ -186,10 +187,7 @@ app.layout = html.Div([
 
 @app.expanded_callback(
     [Output("heatmaps", "children"),
-    Output("sig_table", "children"),
-    Output("network-dropdown", "options"),
-    Output("network-dropdown", "value"),
-    Output('hidden-df', 'children')],
+    Output("sig_table", "children")],
     [Input("low-cutoff", "value"),
     Input("high-cutoff", "value")])
 def update_heatmap(low_cutoff, high_cutoff, **kwargs):
@@ -266,68 +264,81 @@ def update_heatmap(low_cutoff, high_cutoff, **kwargs):
 
     sig_table_content.append(dbc.Table(table_header+table_body, bordered=True,striped=True,hover=True,size="lg"))
     kwargs['session_state']['dash_to_django_context'] = sig_df.to_dict()
+        
+    return [heatmap_content, sig_table_content]
 
-    #### render dropdown menu for network
+@app.expanded_callback(
+    [Output("network-dropdown", "options"),
+    Output("network-dropdown", "value")],
+    [Input("hidden_input", "value")])
+def network_dropdown(hidden_input,  **kwargs):
+    
+    dataset_dict = kwargs['session_state']["django_to_dash_context"]['dataset_dict']
+     #### render dropdown menu for network
     try:
-        cluster_choices = [{'label': 'User cluster '+x, 'value': x} for x in updated_df.user_cluster.unique()]
-        default_value = updated_df.user_cluster.unique()[0]
-        #### hide dataframe in layout to pass to network callback
-        hidden_df = updated_df.to_json()  
+        df = pd.DataFrame(dataset_dict)
+        cluster_choices = [{'label': 'User cluster '+x, 'value': x} for x in df.user_cluster.unique()]
+        default_value = df.user_cluster.unique()[0]
+
     except AttributeError:
         cluster_choices = [{'label': 'User cluster Null', 'value': 'Null'}]
         default_value = "Null"
-        hidden_df = None
-        
-    return [heatmap_content, sig_table_content, 
-        cluster_choices, default_value, hidden_df]
+
+    return [cluster_choices, default_value]
 
 @app.expanded_callback(
     Output("network", "children"),
-    [Input("network-dropdown", "value"),
-    Input('hidden-df', "children")])
-def network_view(user_cluster, hidden_df,  **kwargs):
+    [Input("network-dropdown", "value")])
+def network_view(user_cluster,  **kwargs):
 
-    df = pd.read_json(hidden_df)
-    network_elements = helper.construct_network_elements(df, user_cluster)
+    try:
+        dataset_dict = kwargs['session_state']["django_to_dash_context"]['dataset_dict']
+        df = pd.DataFrame(dataset_dict)
+        # flatten parameters in to string
+        df["parameters"] = df.apply(lambda x: ', '.join(str(e) for e in list(x['parameters'].values())), axis=1)
+
+        network_elements = helper.construct_network_elements(df, user_cluster)
+
+        # node colors depending on p-values
+        new_style = [
+        {
+            "selector": '[pval < 0.00001]',
+            'style': { "background-color": "#e31a1c" }
+        },
+        {
+            "selector": '[pval >= 0.00001][pval < 0.0001]',
+            'style': { "background-color": "#fc4e2a" }
+        },
+        {
+            "selector": '[pval >= 0.0001][pval < 0.001]',
+            'style': { "background-color": "#fd8d3c" }
+        },
+        {
+            "selector": '[pval >= 0.001][pval < 0.01]',
+            'style': { "background-color": "#fed976" }
+        },
+        {
+            "selector": '[pval >= 0.01][pval < 0.05]',
+            'style': { "background-color": "#ffeda0" }
+        },
+        {
+            "selector": '[pval >= 0.05]',
+            'style': { "background-color": "#b3b3b3" }
+        },]
+
+        network_content = [ cyto.Cytoscape(id='network1',
+                                        layout={'name': 'cola', 
+                                                'boundingBox':{'x1':400, 'y1': 200, 'x2':650, 'y2':450}},
+                                        style={'width': '105%', 'height': '600px'},
+                                        stylesheet= default_stylesheet + new_style,
+                                        elements=list(itertools.chain(
+                                        network_elements["dataset_nodes"],
+                                        network_elements["cluster_nodes"],
+                                        network_elements['edges']
+                                        ))) ]
     
-
-    # node colors depending on p-values
-    new_style = [
-    {
-        "selector": '[pval < 0.00001]',
-        'style': { "background-color": "#e31a1c" }
-    },
-    {
-        "selector": '[pval >= 0.00001][pval < 0.0001]',
-        'style': { "background-color": "#fc4e2a" }
-    },
-    {
-        "selector": '[pval >= 0.0001][pval < 0.001]',
-        'style': { "background-color": "#fd8d3c" }
-    },
-    {
-        "selector": '[pval >= 0.001][pval < 0.01]',
-        'style': { "background-color": "#fed976" }
-    },
-    {
-        "selector": '[pval >= 0.01][pval < 0.05]',
-        'style': { "background-color": "#ffeda0" }
-    },
-    {
-        "selector": '[pval >= 0.05]',
-        'style': { "background-color": "#b3b3b3" }
-    },]
-
-    network_content = [ cyto.Cytoscape(id='network1',
-                                    layout={'name': 'cola', 
-                                            'boundingBox':{'x1':400, 'y1': 200, 'x2':650, 'y2':450}},
-                                    style={'width': '105%', 'height': '600px'},
-                                    stylesheet= default_stylesheet + new_style,
-                                    elements=list(itertools.chain(
-                                    network_elements["dataset_nodes"],
-                                    network_elements["cluster_nodes"],
-                                    network_elements['edges']
-                                    ))) ]
+    except ValueError:
+        network_content = []
     
     '''network_content = [ cyto.Cytoscape(id='network1',
                                     layout={'name': 'preset'},
