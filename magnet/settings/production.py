@@ -2,7 +2,7 @@ import os
 from .base import *
 
 SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = True
+DEBUG = False
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
