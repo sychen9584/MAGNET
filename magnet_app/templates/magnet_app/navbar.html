@@ -1,0 +1,14 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<nav class="navbar navbar-expand-xl bg-info navbar-light fixed-top navbar-static-top">
+    <ul class="navbar-nav mx-auto">
+      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'magnet_app/images/logo.png' %}" height="60px"></a>
+      <li class="nav-item">
+      <a class="nav-link" href="{% url 'index' %}"><h1>MAGNET</h1></a>
+      </li>
+      <li class="nav-item" style="margin: auto">
+       <a class="nav-link" href="{% url 'index' %}"><h4> Macrophage Annotation of Gene Network Enrichment Tool</h4></a>
+      </li>
+    </ul>
+</nav>

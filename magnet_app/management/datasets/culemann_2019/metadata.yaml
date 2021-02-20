@@ -1,0 +1,16 @@
+---
+  dataset_name: "Culemann Et al. 2019"
+  full_title: "Locally renewing resident synovial macrophages provide a protective barrier for the joint"
+  authors: "Stephan Culemann, Anika Grüneboom, José Ángel Nicolás-Ávila, Daniela Weidner, Katrin Franziska Lämmle, Tobias Rothe, Juan A. Quintana, Philipp Kirchner, Branislav Krljanac, Martin Eberhardt, Fulvia Ferrazzi, Elke Kretzschmar, Martin Schicht, Kim Fischer, Kolja Gelse, Maria Faas, René Pfeifle, Jochen A. Ackermann, Milena Pachowsky, Nina Renner, David Simon, Reiner F. Haseloff, Arif B. Ekici, Tobias Bäuerle, Ingolf E. Blasig, Julio Vera, David Voehringer, Arnd Kleyer, Friedrich Paulsen, Georg Schett, Andrés Hidalgo & Gerhard Krönke"
+  publication_year: 2018
+  journal: "Cell"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/31391580/"
+  abstract: 'Macrophages are considered to contribute to chronic inflammatory diseases such as rheumatoid arthritis. However, both the exact origin and the role of macrophages in inflammatory joint disease remain unclear. Here we use fate-mapping approaches in conjunction with three-dimensional light-sheet fluorescence microscopy and single-cell RNA sequencing to perform a comprehensive spatiotemporal analysis of the composition, origin and differentiation of subsets of macrophages within healthy and inflamed joints, and study the roles of these macrophages during arthritis. We find that dynamic membrane-like structures, consisting of a distinct population of CX3CR1+ tissue-resident macrophages, form an internal immunological barrier at the synovial lining and physically seclude the joint. These barrier-forming macrophages display features that are otherwise typical of epithelial cells, and maintain their numbers through a pool of locally proliferating CX3CR1- mononuclear cells that are embedded into the synovial tissue. Unlike recruited monocyte-derived macrophages, which actively contribute to joint inflammation, these epithelial-like CX3CR1+ lining macrophages restrict the inflammatory reaction by providing a tight-junction-mediated shield for intra-articular structures. Our data reveal an unexpected functional diversification among synovial macrophages and have important implications for the general role of macrophages in health and disease.'
+  clusters:
+    1: "CCR2+IL1B+ infiltrating macrophages"
+    2: "CX3CR1+ lining macrophages"
+    3: "RETNLA+ interstitial macrophages"
+    4: "MHCII+ interstitial macrophages"
+    5: "CCR2+ARG1+"
+    6: "MHCII high dendritic cells"
+    7: "STMN1+ proliferating cells"

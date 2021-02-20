@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+
+    {% load bootstrap4 %}
+    {% load static %}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'magnet_app/css/style_base.css' %}">
+    <title>MAGNET</title>
+
+</head>
+
+
+<body>
+    
+{% include "magnet_app/navbar.html" %}
+   
+<div class="container">
+<div class= "row" style="padding-top: 120px;">
+    
+<form method="GET" class="form-inline">
+    <div class="form-group mx-sm-3 mb-2">
+    <label for="search"> Enter gene name to search annotations: &nbsp&nbsp&nbsp</label>
+    <input type="text" class="form-control" name="search">
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm mb-2">Submit</button>
+
+</form>
+<br><br><br>
+<table class="table table-striped table-bordered table-hover table-sm GeneratedTable">
+    <thead class="table-info">
+        <tr>
+        <th scope="col" style="text-align: center">Gene Symbol</th>
+        <th scope="col">Ensembl ID</th>
+        <th scope="col">Dataset Name</th>
+        <th scope="col">Gene Set #</th>
+        <th scope="col">Annotation</th>
+        </tr>
+    </thead>
+    {% for entry in found_entries %}
+    <tr>
+        <td style="text-align: center">{{entry.gene.gene_symbol |capfirst}}</td>
+        <td>{{entry.gene.ensembl_id}}</td>
+        <td>{{entry.cluster.dataset}}</td>
+        <td>{{entry.cluster.cluster_number}}</td>
+        <td>{{entry.cluster.cluster_description}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    
+<br>
+<button type = "button" class="btn btn-secondary" onclick = 'location.href="{% url 'index' %}"'>Back to Home</button>
+    
+</div>
+</div>
+</body>
+</html>

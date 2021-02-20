@@ -1,0 +1,33 @@
+---
+  dataset_name: "Lavin Et al. 2014"
+  full_title: "Tissue-resident Macrophage Enhancer Landscapes Are Shaped by the Local Microenvironment"
+  authors: 'Yonit Lavin, Deborah Winter, 
+  Ronnie Blecher-Gonen, Eyal David 2, Hadas Keren-Shaul, Miriam Merad, Steffen Jung, Ido Amit'
+  publication_year: 2014
+  journal: "Cell"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/25480296/"
+  abstract: 'Macrophages are critical for innate immune defense and also control organ homeostasis in a 
+  tissue-specific manner. They provide a fitting model to study the impact of ontogeny and microenvironment on 
+  chromatin state and whether chromatin modifications contribute to macrophage identity. Here, we profile the 
+  dynamics of four histone modifications across seven tissue-resident macrophage populations. We identify 12,743 
+  macrophage-specific enhancers and establish that tissue-resident macrophages have distinct enhancer landscapes 
+  beyond what can be explained by developmental origin. Combining our enhancer catalog with gene expression 
+  profiles and open chromatin regions, we show that a combination of tissue- and lineage-specific transcription 
+  factors form the regulatory networks controlling chromatin specification in tissue-resident macrophages. 
+  The environment is capable of shaping the chromatin landscape of transplanted bone marrow precursors, 
+  and even differentiated macrophages can be reprogrammed when transferred into a new microenvironment. 
+  These results provide a comprehensive view of macrophage regulatory landscape and highlight the 
+  importance of the microenvironment, along with pioneer factors in orchestrating identity and plasticity.'
+  clusters:
+    1: "Microglia"
+    2: "Kupffer cells & Spleen MΦ"
+    3: "Kupffer cells & Spleen & Lung MΦ"
+    4: "Lung MΦ"
+    5: "Lung & Peritoneal MΦ"
+    6: "Peritoneal MΦ"
+    7: "Ileal & Colonic MΦ"
+    8: "Monocytes"
+    9: "Multiple"
+    10: "Multiple"
+    11: "Multiple"
+

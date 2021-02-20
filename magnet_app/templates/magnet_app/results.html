@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+    
+    {% load bootstrap4 %}
+    {% load static %}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'magnet_app/css/style_base.css' %}">
+    <title>Results</title>
+    
+    <style>
+    
+    body { 
+    padding-bottom: 30px
+    }
+    
+    table.Colorcoded{
+    border-collapse: collapse;
+    border-width: 2px;
+    }
+    
+    table.Colorcoded td, table.Colorcoded th {
+    border-width: 1px;
+    padding: 3px;
+    width: 30px;
+    }
+    
+    table.Colorcoded a{
+    display:block;
+    text-decoration:none;
+    }
+    
+    table.GeneratedTable{
+    border-width: 2px;
+    border-style: solid;
+    }
+    
+    table.GeneratedTable td, table.GeneratedTable th{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left:3px;
+    padding-right:3px;
+    border-width: 2px;
+    border-style: solid;
+    }
+    
+    table.GeneratedTable th{
+    text-align: center
+    }
+    
+    p.before-list {
+    margin-bottom:5px;
+    }
+
+    </style>
+</head>
+
+<body>
+    {%load plotly_dash%}
+    {% plotly_header %}
+
+    <div class="container">
+    {% include "magnet_app/navbar.html" %}
+    </div>  
+
+    <div class="container">
+    <div class= "row align-items-center justify-content-center" style="padding-top: 120px;">
+        
+        {%plotly_direct name="result_heatmap"%}
+    
+    </div></div>
+    
+    <br />
+    
+    <div class="container">
+    
+    <p class="font-weight-bold before-list">MAGNET database recognized</p>
+    <ul>
+    <li> {{matched_num.0}} out of {{orig_num.0}} input genes</li>
+    <li> {{matched_num.1}} out of {{orig_num.1}} background genes</li>
+    {% for dataset, nums in user_matched_num.items %}
+    <li> {{nums.1}} out of {{nums.0}} genes from {{dataset}} </li>
+    {% endfor %}
+    </ul>
+    
+    <p class="font-weight-bold before-list">Unmatched input genes:</p>
+    <ul>
+    {% for cluster, genes in missed_genes.items %}
+    <li>User cluster {{cluster}}: {{genes}} </li>
+    {% endfor %}
+    </ul>
+    <p class="font-weight-bold before-list">Unmatched background genes: </p>
+    <ul><li>{{missed_background}}</li></ul>
+    <p class="font-weight-bold before-list">Unmatched dataset genes:</p>
+    <ul>
+    {% for dataset, genes in user_missed_genes.items %}
+    <li>{{dataset}}: {{genes}} </li>
+    {% endfor %}
+    </ul>
+    </div>
+    
+    <br />
+
+
+    <div class="container">
+        <button type = "button" class="btn btn-secondary btn-lg" onclick = 'location.href="{% url 'index' %}"'>Back to Home</button>
+        <br/>
+    </div>
+</body>
+{% plotly_footer %}
+
+</html>

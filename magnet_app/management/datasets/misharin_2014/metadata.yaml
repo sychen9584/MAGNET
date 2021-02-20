@@ -1,0 +1,14 @@
+---
+  dataset_name: "Misharin AV Et al. 2017"
+  full_title: "Monocyte-derived alveolar macrophages drive lung fibrosis and persist in the lung over the life span"
+  authors: 'Alexander V Misharin, Luisa Morales-Nebreda, Paul A Reyfman, Carla M Cuda, James M Walter, Alexandra C McQuattie-Pimentel, Ching-I Chen, Kishore R Anekalla, Nikita Joshi, Kinola J N Williams, Hiam Abdala-Valencia, Tyrone J Yacoub, Monica Chi, Stephen Chiu, Francisco J Gonzalez-Gonzalez, Khalilah Gates, Anna P Lam, Trevor T Nicholson, Philip J Homan, Saul Soberanes, Salina Dominguez, Vince K Morgan, Rana Saber, Alexander Shaffer, Monique Hinchcliff, Stacy A Marshall, Ankit Bharat, Sergejs Berdnikovs, Sangeeta M Bhorade, Elizabeth T Bartom, Richard I Morimoto, William E Balch, Jacob I Sznajder, Navdeep S Chandel, Gökhan M Mutlu, Manu Jain, Cara J Gottardi, Benjamin D Singer, Karen M Ridge, Neda Bagheri, Ali Shilatifard, GR Scott Budinger, Harris Perlman'
+  publication_year: 2017
+  journal: "Journal of Experimental Medicine"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/28694385/"
+  abstract: 'Little is known about the relative importance of monocyte and tissue-resident macrophages in the development of lung fibrosis. We show that specific genetic deletion of monocyte-derived alveolar macrophages after their recruitment to the lung ameliorated lung fibrosis, whereas tissue-resident alveolar macrophages did not contribute to fibrosis. Using transcriptomic profiling of flow-sorted cells, we found that monocyte to alveolar macrophage differentiation unfolds continuously over the course of fibrosis and its resolution. During the fibrotic phase, monocyte-derived alveolar macrophages differ significantly from tissue-resident alveolar macrophages in their expression of profibrotic genes. A population of monocyte-derived alveolar macrophages persisted in the lung for one year after the resolution of fibrosis, where they became increasingly similar to tissue-resident alveolar macrophages. Human homologues of profibrotic genes expressed by mouse monocyte-derived alveolar macrophages during fibrosis were up-regulated in human alveolar macrophages from fibrotic compared with normal lungs. Our findings suggest that selectively targeting alveolar macrophage differentiation within the lung may ameliorate fibrosis without the adverse consequences associated with global monocyte or tissue-resident alveolar macrophage depletion.'
+  clusters:
+    1: "Mo-AM & TR-AM"
+    2: "Mono"
+    3: "IM & Mo-AM"
+    4: "Day 14"
+    5: "Day 19"

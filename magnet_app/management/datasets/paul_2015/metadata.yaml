@@ -1,0 +1,28 @@
+---
+  dataset_name: "Paul Et al. 2015"
+  full_title: "Transcriptional Heterogeneity and Lineage Commitment in Myeloid Progenitors"
+  authors: "Franziska Paul, Ya'ara Arkin, Amir Giladi, Diego Adhemar Jaitin, Ephraim Kenigsberg, Hadas Keren-Shaul, Deborah Winter, David Lara-Astiaso, Meital Gury, Assaf Weiner, Eyal David, Nadav Cohen, Felicia Kathrine Bratt Lauridsen, Simon Haas, Andreas Schlitzer, Alexander Mildner, Florent Ginhoux, Steffen Jung, Andreas Trumpp, Bo Torben Porse, Amos Tanay, Ido Amit"
+  publication_year: 2015
+  journal: "Cell"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/26627738/"
+  abstract: 'Within the bone marrow, stem cells differentiate and give rise to diverse blood cell types and functions. Currently, hematopoietic progenitors are defined using surface markers combined with functional assays that are not directly linked with in vivo differentiation potential or gene regulatory mechanisms. Here, we comprehensively map myeloid progenitor subpopulations by transcriptional sorting of single cells from the bone marrow. We describe multiple progenitor subgroups, showing unexpected transcriptional priming toward seven differentiation fates but no progenitors with a mixed state. Transcriptional differentiation is correlated with combinations of known and previously undefined transcription factors, suggesting that the process is tightly regulated. Histone maps and knockout assays are consistent with early transcriptional priming, while traditional transplantation experiments suggest that in vivo priming may still allow for plasticity given strong perturbations. These data establish a reference model and general framework for studying hematopoiesis at single-cell resolution.'
+  clusters:
+    1: "Erythroid"
+    2: "Erythroid"
+    3: "Erythroid"
+    4: "Erythroid"
+    5: "Erythroid"
+    6: "Erythroid"
+    7: "Erythroid"
+    8: "Megakaryocyte"
+    9: "Neutrophil"
+    10: "Monocyte"
+    11: "DC"
+    12: "Basophil"
+    13: "Basophil"
+    14: "Monocyte"
+    15: "Monocyte"
+    16: "Neutrophil"
+    17: "Neutrophil"
+    18: "Eosinophil"
+    19: "Lymphoid"

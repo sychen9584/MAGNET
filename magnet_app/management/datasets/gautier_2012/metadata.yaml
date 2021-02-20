@@ -1,0 +1,17 @@
+---
+  dataset_name: "Gautier Et al. 2012"
+  full_title: "Gene expression profiles and transcriptional regulatory pathways underlying mouse tissue macrophage identity and diversity"
+  authors: 'Emmanuel L Gautier, Tal Shay, Jennifer Miller, Melanie Greter, Claudia Jakubzick, Stoyan Ivanov, Julie Helft, Andrew Chow, Kutlu G Elpek, 
+  Simon Gordonov, Amin R Mazloom, Avi Maayan, Wei-Jen Chua, Ted H Hansen, Shannon J Turley, Miriam Merad, Gwendalyn J Randolph, Immunological Genome Consortium'
+  publication_year: 2012
+  journal: "Nature Immunology"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/23023392/"
+  abstract: 'We assessed tissue macrophage gene expression in different mouse organs. Diversity in gene expression among different populations of macrophages was remarkable. Only a few hundred mRNA transcripts stood out as selectively expressed by macrophages over DCs and many of these were not present in all macrophages. Nonetheless, well-characterized surface markers, including MerTK and FcγR1 (CD64), along with a cluster of novel transcripts were distinctly and universally associated with mature tissue macrophages. TCEF3, C/EBPα, BACH1, and CREG-1 were among the top transcriptional regulators predicted to regulate these core macrophage-associated genes. 
+  Other transcription factor mRNAs were strongly associated with single macrophage populations. We further 
+  illustrate how these transcripts and the proteins they encode facilitate distinguishing 
+  macrophage versus DC identity of less characterized populations of mononuclear phagocytes.'
+  clusters:
+    1: "Spleen"
+    2: "Lung"
+    3: "Peritoneal"
+    4: "Microglia"

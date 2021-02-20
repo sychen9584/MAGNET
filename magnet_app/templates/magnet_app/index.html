@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+
+    {% load bootstrap4 %}
+    {% load static %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'magnet_app/css/style_base.css' %}">
+    <title>MAGNET</title>
+
+</head>
+
+<body>
+    {%load plotly_dash%}
+    {% plotly_header %}
+    
+    {% include "magnet_app/navbar.html" %}
+
+    <div class="container">
+        <div class= "row" style="padding-top: 100px;">
+            <div class="col-sm">
+                <div class="card">
+
+                    <h5 class="card-header bg-secondary text-white">Enter your gene lists or upload files</h5>
+            
+                    <div class="card-body">
+            
+                        <form action="{% url 'processing' %}" method="post" enctype="multipart/form-data">
+                
+                            {% csrf_token %}
+                
+                            {% bootstrap_form_errors form %}
+
+                            {%plotly_direct name="index_form"%}
+
+                            {% bootstrap_field form.user_genes_upload %}
+    
+                            <hr />
+                            
+                            <div class="inline mb-2">
+                                <p class="label">Select background calculation mode:</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="background_calc" value="Intersect" checked>
+                                    <label class="form-check-label">Intersect</label>
+                                </div>
+        
+                                <div class="form-check form-check-inline">
+                        
+                                    <input class="form-check-input" type="radio" name="background_calc" value="User">
+                                    <label class="form-check-label">User</label>
+                                </div>
+                            </div>
+                
+                            {% bootstrap_field form.user_background %}
+                            {% bootstrap_field form.user_background_upload %}
+    
+                            <hr />
+                
+                            <div class="inline">
+                                <p class="label">Choose datasets to be used for MAGNET analysis:</p>
+    
+                                {% for choice in form.user_selected_datasets.field.choices %}
+                        
+                                <div class="form-check ml-3">
+                                    <input class="form-check-input" type="checkbox" name="user_selected_datasets" value="{{choice.0}}" checked>
+                                    
+                                    {% ifequal form.user_selected_datasets.data choice.1 %}
+                                    checked="checked"
+                                    {% endifequal %}
+                            
+                                    <label class="form-check-label"><a href="{% url 'dataset_info' choice.0 %}" target="_blank">{{choice.1}}</a></label>
+                                </div> 
+                                
+                                {% endfor %}
+                
+                            </div>
+
+                            <p class="label">or upload your own datasets:</p>
+
+                            <div>{% bootstrap_field form.user_dataset_upload %}</div>
+
+                            <hr/>
+                
+                            <p class="text-info h6 font-italic">There are a total of {{ database_numbers.1 }} dataset{{ database_numbers.1|pluralize }} and {{ database_numbers.0 }} genes in the database.</p>
+                
+                            <br/>
+                
+                            <button type="submit" class="btn btn-primary">Submit</button>&nbsp&nbsp&nbsp
+                            <button type="reset" class="btn btn-secondary">Reset Form</button>
+                
+                        </form>
+            
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm">
+                <div class="card" style="padding-bottom:15px">
+                    <h5 class="card-header bg-info text-white">What is MAGNET?</h5>
+
+                    <div class="card-body">
+                        <img src="{% static 'magnet_app/images/logo.png' %}"  alt="Card image" class="center">
+
+                        <p class="text-justify lead font-weight-bold" style="font-size:14pt; margin-top:15px">MAGNET is a web tool for assessing 
+                            and visualizing enrichments of user supplied gene sets
+                            against annotated macrophage gene clusters curated from published literature.</p>
+
+                            <br />
+
+                            <div class="wrapper text-center">
+    
+                                <div class="btn-group btn-group-lg">
+        
+                                    <a href="/search" class="btn btn-info">Gene Search</a>
+                                    <a href="/documentation/?page=usage" class="btn btn-info" target="_blank">Usage Instructions</a>
+                                    <a href="/documentation/?page=faq" class="btn btn-info" target="_blank">FAQ</a>
+    
+                                </div>
+
+                            </div>
+
+                            <br />
+
+                            <h5 style="font-style:italic">Changelog:</h5>
+
+                            <h5>MAGNET version 1.0 &nbsp&nbsp&nbsp Feb 2021</h5>
+
+                            <ul>
+                                <li>Implemented dynamic heatmap and table visualization</li>
+                                <li>Added download to csv feature</li>
+                                <li>Allow users to upload their own datasets</li>
+                                <li>Restored five datasets</li>
+                            </ul>
+
+                            <hr />
+
+                            <h5 style="font-style:italic">Contact:</h5>
+                            
+                            <p>Please send your comments, suggestions and bug reports to: <strong>shang.chen@northwestern.edu</strong> <br/> 
+                                <strong>gaurav.gadhvi@northwestern.edu</strong></p>
+                                <img src="{% static 'magnet_app/images/northwestern.jpg' %}" alt="school logo" class="center">
+
+
+                    </div>
+
+                </div>
+            </div>
+</body>
+{% plotly_footer %}
+</html>

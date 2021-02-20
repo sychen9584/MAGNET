@@ -1,0 +1,29 @@
+---
+  dataset_name: "Matcovitch-Natan O. Et al. 2016"
+  full_title: "Microglia development follows a stepwise program to regulate brain homeostasis."
+  authors: 'Orit Matcovitch-Natan, Deborah R Winter, Amir Giladi, Stephanie Vargas Aguilar, 
+  Amit Spinrad, Sandrine Sarrazin, Hila Ben-Yehuda, Eyal David, Fabiola Zelada González,
+  Pierre Perrin, Hadas Keren-Shaul, Meital Gury, David Lara-Astaiso, Christoph A Thaiss, Merav Cohen, 
+  Keren Bahar Halpern, Kuti Baruch, Aleksandra Deczkowska, Erika Lorenzo-Vivas, 
+  Shalev Itzkovitz, Eran Elinav, Michael H Sieweke, Michal Schwartz, Ido Amit'
+  publication_year: 2016
+  journal: "Science"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/27338705/"
+  abstract: 'Microglia, the resident myeloid cells of the central nervous system, play important roles 
+  in life-long brain maintenance and in pathology. Despite their importance, their regulatory dynamics 
+  during brain development have not been fully elucidated. Using genome-wide chromatin and expression profiling 
+  coupled with single-cell transcriptomic analysis throughout development, we found that microglia undergo three 
+  temporal stages of development in synchrony with the brain--early, pre-, and adult microglia--which are 
+  under distinct regulatory circuits. Knockout of the gene encoding the adult microglia transcription 
+  factor MAFB and environmental perturbations, such as those affecting the microbiome or prenatal immune 
+  activation, led to disruption of developmental genes and immune response pathways. Together, our work 
+  identifies a stepwise microglia developmental program integrating immune response pathways that may be 
+  associated with several neurodevelopmental disorders.'
+  clusters:
+    1: "Yolk sac"
+    2: "Early microglia E1"
+    3: "Early microglia E2"
+    4: "Pre-microglia P1"
+    5: "Pre-microglia P2"
+    6: "Adult microglia A1"
+    7: "Adult microglia A2"
