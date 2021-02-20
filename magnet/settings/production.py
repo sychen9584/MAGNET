@@ -1,4 +1,3 @@
-from MAGNET.magnet.settings import DATABASES
 import os
 from .base import *
 
