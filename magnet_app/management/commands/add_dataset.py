@@ -80,7 +80,8 @@ class Command(BaseCommand):
             
         for index, row in df.iterrows():
 
-            print(row['ensembl'])
+            #print(row['ensembl'])
+            print(index)
     
             if dataset.cluster_set.filter(cluster_number=row.iloc[1]).exists() and \
                 Gene.objects.filter(gene_symbol=row['Symbols'].upper()).exists():
