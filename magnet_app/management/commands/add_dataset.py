@@ -76,7 +76,7 @@ class Command(BaseCommand):
             _, _, result = hp.convert_gene_symbol_to_ensembl(genes)
             mapped_genes, ensembl_ids = zip(*[(k, v["ensembl"]) for k, v in result.items() if v["status"]=="mapped"])
             df = df[df.iloc[:,0].isin(mapped_genes)] # keep converted rows
-            df["ensembl"] = ensembl_ids
+            #df["ensembl"] = ensembl_ids
             
         for index, row in df.iterrows():
 
