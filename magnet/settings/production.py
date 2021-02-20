@@ -2,7 +2,7 @@ import os
 from .base import *
 
 SECRET_KEY = os.environ['SECRET_KEY']
-DEBUG = True
+DEBUG = False
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
@@ -11,7 +11,7 @@ DATABASES = {'default':{}}
 DATABASES['default'].update(db_from_env)
 
 ALLOWED_HOSTS = ["blooming-peak-08320.herokuapp.com",
-                    "magnet.herokuapp.com"]
+                    "magnet-winterlab.herokuapp.com"]
 
 CELERY_BROKER_URL = os.environ['REDIS_URL']
 CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
