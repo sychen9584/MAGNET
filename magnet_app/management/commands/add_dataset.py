@@ -83,11 +83,11 @@ class Command(BaseCommand):
             print(row['ensembl'])
     
             if dataset.cluster_set.filter(cluster_number=row.iloc[1]).exists() and \
-                Gene.objects.filter(ensembl_id=row['ensembl']).exists():
-                #Gene.objects.filter(gene_symbol=row['Symbols'].upper()).exists():
+                Gene.objects.filter(gene_symbol=row['Symbols'].upper()).exists():
+                #Gene.objects.filter(ensembl_id=row['ensembl']).exists():
                 cluster = dataset.cluster_set.get(cluster_number = row.iloc[1])
-                gene = Gene.objects.get(ensembl_id=row['ensembl'])
-                #gene = Gene.objects.get(gyne_symbol=row['Symbols'].upper())
+                #gene = Gene.objects.get(ensembl_id=row['ensembl'])
+                gene = Gene.objects.get(gene_symbol=row['Symbols'].upper())
                     
                 # create annotation
                 annotation = Annotation(gene = gene, cluster = cluster)
