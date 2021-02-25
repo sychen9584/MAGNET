@@ -76,23 +76,28 @@ class Command(BaseCommand):
             _, _, result = hp.convert_gene_symbol_to_ensembl(genes)
             mapped_genes, ensembl_ids = zip(*[(k, v["ensembl"]) for k, v in result.items() if v["status"]=="mapped"])
             df = df[df.iloc[:,0].isin(mapped_genes)] # keep converted rows
-            #df["ensembl"] = ensembl_ids
+            df["ensembl"] = ensembl_ids
             
         for index, row in df.iterrows():
 
-            #print(row['ensembl'])
-            print(index)
-    
+            print(row['ensembl'])
+            
             if dataset.cluster_set.filter(cluster_number=row.iloc[1]).exists() and \
-                Gene.objects.filter(gene_symbol=row['Symbols'].upper()).exists():
-                #Gene.objects.filter(ensembl_id=row['ensembl']).exists():
+                Gene.objects.filter(ensembl_id=row['ensembl']).exists():
+               
                 cluster = dataset.cluster_set.get(cluster_number = row.iloc[1])
-                #gene = Gene.objects.get(ensembl_id=row['ensembl'])
-                gene = Gene.objects.get(gene_symbol=row['Symbols'].upper())
-                    
+                gene = Gene.objects.get(ensembl_id=row['ensembl'])
+               
                 # create annotation
                 annotation = Annotation(gene = gene, cluster = cluster)
                 annotation.save()
 
             else:
                 continue
+
+
+
+
+            #print(index)
+            #Gene.objects.filter(gene_symbol=row['Symbols'].upper()).exists():
+            #gene = Gene.objects.get(gene_symbol=row['Symbols'].upper()
