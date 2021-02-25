@@ -26,7 +26,8 @@ cyto.load_extra_layouts()
 low_values = [0.00001, 0.00005, 0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05, 0.1, 0.5]
 low_dict = {i: low_values[i] for i in range(len(low_values))}
 
-high_values = [0.50, 0.65, 0.75, 0.8, 0.85, 0.9, 0.95, 0.99, 0.995, 0.999]
+#high_values = [0.50, 0.65, 0.75, 0.8, 0.85, 0.9, 0.95, 0.99, 0.995, 0.999]
+high_values = [0.5, 0.9, 0.95, 0.99, 0.995, 0.999, 0.9995, 0.9999, 0.99995, 0.99999]
 high_dict = {i: high_values[i] for i in range(len(high_values))}
 
 # style sheet for network
@@ -99,7 +100,7 @@ app.layout = html.Div([
                 dbc.Col(html.Div([
                     html.H5("Significance cutoffs:"),
                     html.Div([
-                            html.Label("Low threshold", style={'display': 'inline-block',
+                            html.Label("Enrichment", style={'display': 'inline-block',
                                                         'width': '95%',
                                                         'text-align': 'right',
                                                         'color': 'red'}),
@@ -111,7 +112,7 @@ app.layout = html.Div([
 
                             html.Br(),
 
-                            html.Label("High threshold", style={'display': 'inline-block',
+                            html.Label("Depletion", style={'display': 'inline-block',
                                                                 'width': '95%',
                                                                 'text-align': 'right',
                                                                 'color': 'blue'}),
