@@ -236,7 +236,7 @@ def dataframe_to_html_table(row):
                                 "aria-expanded": "False",
                                 "aria-controls": "showgenes_{}".format(row[7])}, 
                             href= "#showgenes_{}".format(row[7])),
-                            html.Div(" ".join(g.lower().capitalize() for g in row[6]),
+                            html.Div(", ".join(g.lower().capitalize() for g in row[6]),
                             id="showgenes_{}".format(row[7]), className="collapse")])
 
     return html.Tr([user_cluster, dataset_name,
@@ -285,6 +285,8 @@ def dash_generate_heatmaps(dataset_df, is_user,
         if not is_user:
             dataset = Dataset.objects.get(id=d)
             heatmap_content.append(html.H4(children=html.A(dataset.dataset_name,href="/dataset/"+ str(dataset.id),target="_blank"),
+                            style={"font-style": "italic"}))
+            heatmap_content.append(html.H5(children=html.A(dataset.dataset_type,href="/dataset/"+ str(dataset.id),target="_blank"),
                             style={"font-style": "italic"}))
             # filter for dataframe rows that belong to the dataset
             df = dataset_df[dataset_df.dataset_id == d]

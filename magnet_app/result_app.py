@@ -142,7 +142,7 @@ app.layout = html.Div([
         ),
     ),
     dbc.Container([
-            html.Ul([html.Li(html.A(html.H5("Significant Results"),
+            html.Ul([html.Li(html.A(html.H5("All Significantly Enriched Results"),
                                         className="nav-link active", **{"data-toggle": "tab"}, href="#sig"),
                                 className="nav-item"),
                  

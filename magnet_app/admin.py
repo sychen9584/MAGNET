@@ -11,6 +11,7 @@ class DatasetAdmin(admin.ModelAdmin):
     list_display = ('dataset_name', 'journal')
     fieldsets = [
             (None, {'fields': ['dataset_name',
+                               'dataset_type',
                                'full_title',
                                'authors',
                                'abstract',

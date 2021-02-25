@@ -179,7 +179,10 @@ def get_dataset_params(user_query, background_query, dataset, background_calc):
         N = len(background_query)
         n = len(user_query)
     
-    params = {'N': N, 'n': n, 'dataset_name': dataset.dataset_name, 'dataset_id': dataset.id}
+    params = {'N': N, 'n': n, 
+                'dataset_name': dataset.dataset_name,
+                'dataset_id': dataset.id,
+                'dataset_type': dataset.dataset_type}
     
     return params
 
@@ -228,6 +231,7 @@ def compute_hypergeom(dataset_params, cluster_params, user_cluster):
             'overlap_genes': entry['overlap_genes'],
             'dataset_id': entry['dataset_id'],
             'dataset_name': entry['dataset_name'],
+            'dataset_type': entry['dataset_type'],
             'cluster_id': entry['cluster_id'],
             'cluster_number': entry['cluster_number'],
             'cluster_name': entry['cluster_name'],

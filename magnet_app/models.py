@@ -27,6 +27,7 @@ class Dataset(models.Model):
 
     """
     dataset_name = models.CharField(max_length=200, unique=True)
+    dataset_type = models.CharField(max_length=200, blank=True)
     full_title = models.TextField(blank=True)
     authors = models.TextField(blank=True)
     publication_year = models.IntegerField(blank=True,null=True)
@@ -38,7 +39,7 @@ class Dataset(models.Model):
         ordering = ["dataset_name"]
 
     def __str__(self):
-        return self.dataset_name
+        return self.dataset_type + " (" + self.dataset_name + ")"
 
     def get_clusters(self):
         clusters = self.cluster_set.all()
