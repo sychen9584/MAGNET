@@ -3,6 +3,8 @@ import mygene, re, os.path
 import pandas as pd
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
+from dash_table.Format import Format
 from django.db.models import Q
 from .models import Gene, Dataset, Cluster, Annotation, Graph_edge
 import dash_daq as daq
@@ -220,6 +222,115 @@ def handle_dataset_csv(csv_files):
                     dataset_gene_list[filename][fields[1].strip()].append(fields[0].strip().upper())
         
     return dataset_gene_list
+
+def dataframe_to_dash_table(df):
+    
+    df['overlap_genes'] = df.apply(lambda x: ', '.join(g.lower().capitalize() for g in x['overlap_genes']), axis=1)
+    df = df[['user_cluster','dataset_name','dataset_type','cluster_description',
+                'pval','adjusted_pval','parameters', 'overlap_genes']]
+
+    dt = dash_table.DataTable(
+
+        id='sigtable',
+
+        sort_action='native',
+        filter_action='native',
+        page_action='native',
+        page_size=50,
+
+        style_header={
+        'backgroundColor': '#bee5eb',
+        'color': '#007bff',
+        'fontWeight': 'bold',
+        'whiteSpace': 'normal',
+        'height': 'auto',
+        'textAlign': 'center',
+        'textDecoration': 'underline',
+        },
+
+        style_cell={
+        'whiteSpace': 'normal',
+        'height': 'auto',
+        'textAlign': 'center',
+        'font_family': "sans-serif",
+        'font_size': '15px',
+        'padding': '10px',
+        },
+
+        style_data_conditional=[
+        {
+            'if': {'column_id': 'overlap_genes'},
+            'overflow': 'hidden',
+            'textOverflow': 'ellipsis',
+            'maxWidth': '50px',
+            'whiteSpace': 'no-wrap',
+        },{
+            
+            'if': {'row_index': 'odd'},
+            'backgroundColor': 'rgb(248, 248, 248)'
+            
+        }],
+
+        tooltip_header={
+            'user_cluster': {'value': "User inputted cluster name"},
+            'dataset_name': {'value': "Name of dataset tested"},
+            'dataset_type': {'value': "Description of dataset tested"},
+            'cluster_description': {'value': "Description of dataset cluster tested"},
+            'pval': {'value': "Raw p-values from hypergeometric tests"},
+            'adjusted_pval': {'value': "Adjusted by Benjamini-Hochberg procedure"},
+            'parameters': {'value': 'Hypergeometric parameters used, see explanation of output for more details'},
+            'overlap_genes': {'value': 'User input gene symbols associated with the dataset cluster'}
+        },
+        
+        tooltip_data=[
+        {
+           'overlap_genes': {'value': row['overlap_genes']}
+        } for row in df.to_dict('records')
+        ],
+
+        tooltip_delay=0,
+        tooltip_duration=None,
+
+        css=[{
+        'selector': '.dash-table-tooltip',
+        'rule': 'font-size: 14px; font-family: sans-serif; background-color: #bee5eb'
+        }],
+
+        columns=[{
+            'id': 'user_cluster',
+            'name': 'User Cluster (n)',
+        }, {
+            'id': 'dataset_name',
+            'name': 'Dataset',
+        }, {
+            'id': 'dataset_type',
+            'name': 'Description',
+        }, {
+            'id': 'cluster_description',
+            'name': 'Dataset Cluster (K)',
+        }, {
+            'id': 'pval',
+            'name': 'P-value',
+            'type': 'numeric',
+            'format': Format(precision=2)
+        },{
+            'id': 'adjusted_pval',
+            'name': 'Adjusted P-value (FDR)',
+            'type': 'numeric',
+            'format': Format(precision=2)
+        }, {
+            'id': 'parameters',
+            'name': 'Parameters (N, K, n, k)',
+        }, {
+            'id': 'overlap_genes',
+            'name': 'Overlapped Genes',
+        }],
+        data=df.to_dict('records'),
+    )
+    print(df.to_dict('records'))
+    return dt
+
+
 
 def dataframe_to_html_table(row):
 

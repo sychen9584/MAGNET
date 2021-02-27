@@ -3,6 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_daq as daq
 import dash_cytoscape as cyto
+import dash_table
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
@@ -92,6 +93,7 @@ default_stylesheet = [
 
 
 app.layout = html.Div([
+    
     html.Br(),
     dbc.Container(
     dbc.Row(
@@ -154,8 +156,7 @@ app.layout = html.Div([
                 html.Div([
                         html.Div(html.Div([html.A("Download Significant Results", className="btn btn-primary mt-2 mb-3",
                                                         href="/results/download/"),
-                                             html.Div(id='sig_table'),
-                                            ]),
+                                            html.Div(id='sig_table'),]),
                                 id="sig", className="container tab-pane active"),
                                 
                         html.Div(html.Div(
@@ -185,10 +186,10 @@ app.layout = html.Div([
     
 ])
 
-
+#Output("test_table", "data"),
 @app.expanded_callback(
     [Output("heatmaps", "children"),
-    Output("sig_table", "children")],
+    Output("sig_table", "children"),],
     [Input("low-cutoff", "value"),
     Input("high-cutoff", "value")])
 def update_heatmap(low_cutoff, high_cutoff, **kwargs):
@@ -198,39 +199,6 @@ def update_heatmap(low_cutoff, high_cutoff, **kwargs):
     
     user_dataset_dict = kwargs['session_state']["django_to_dash_context"]['user_dataset_dict']
     user_dataset_df = pd.DataFrame(user_dataset_dict)
-
-    ## build up table for significant result entries:
-    sig_table_content = []
-
-    table_header = [
-        html.Thead(html.Tr([html.Th(children=html.A("User Cluster",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="User inputted cluster name")), 
-                            html.Th(children=html.A("Dataset",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="Name of dataset tested")),
-                            html.Th(children=html.A("Dataset Cluster",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="Description of dataset cluster tested")),
-                            html.Th(children=html.A("P-value",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="Raw p-values from hypergeometric tests")),
-                            html.Th(children=html.A("Adjusted P-Value (FDR)",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="Adjusted by Benjamini-Hochberg procedure")),
-                            html.Th(children=html.A("Parameters (N, B, n, b)",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title='''Explanation of hypergeometric parameters:
-                                    N = Total number of background genes, depending on background calculation mode selected 
-                                    B = Number of background genes associated with the dataset cluster
-                                    n = Total number of user input genes
-                                    b = Number of user input genes associated with the dataset cluster''')),
-                            html.Th(children=html.A("Overlapped Genes",
-                                    href="#", **{"data-toggle": "tool-tip"},
-                                    title="User input gene symbols associated with the dataset cluster")),
-                            ]), style={"text-align":'center'}, className="table-info"),
-    ]
-
 
     try:
         user_heatmap_content, user_updated_df = helper.dash_generate_heatmaps(user_dataset_df, True,
@@ -253,19 +221,12 @@ def update_heatmap(low_cutoff, high_cutoff, **kwargs):
 
     updated_df = pd.concat(updated_df) if updated_df else None
    
-    sig_df = helper.merge_sig_dataframes(user_updated_df, updated_df)
-    
     heatmap_content = user_heatmap_content + heatmap_content
-
-    table_body = [html.Tbody([helper.dataframe_to_html_table(row) for row in 
-                zip(sig_df["user_cluster"], sig_df["dataset_name"],
-                    sig_df["cluster_description"], sig_df["pval"],
-                    sig_df["adjusted_pval"], sig_df["parameters"],
-                    sig_df["overlap_genes"], sig_df["row_num"])])]
-
-    sig_table_content.append(dbc.Table(table_header+table_body, bordered=True,striped=True,hover=True,size="lg"))
+    
+    sig_df = helper.merge_sig_dataframes(user_updated_df, updated_df)
+    sig_table_content = helper.dataframe_to_dash_table(sig_df)
     kwargs['session_state']['dash_to_django_context'] = sig_df.to_dict()
-        
+
     return [heatmap_content, sig_table_content]
 
 @app.expanded_callback(
