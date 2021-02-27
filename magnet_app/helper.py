@@ -330,30 +330,6 @@ def dataframe_to_dash_table(df):
     print(df.to_dict('records'))
     return dt
 
-
-
-def dataframe_to_html_table(row):
-
-    ''' function to convert a dataframe row to a row in html table'''
-
-    user_cluster = html.Td(row[0], style={"text-align":'center'})
-    dataset_name = html.Td(row[1])
-    cluster_description = html.Td(row[2])
-    pval = html.Td('{:.2e}'.format(row[3]), style={"text-align":'center'})
-    adjusted_pval = html.Td('{:.2e}'.format(row[4]), style={"text-align":'center'})
-    parameters = html.Td(row[5], style={"text-align":'center'})
-    overlap_genes = html.Td([html.A('[+] Show Genes', className="btn btn-link",
-                            **{"data-toggle": "collapse",
-                                "aria-expanded": "False",
-                                "aria-controls": "showgenes_{}".format(row[7])}, 
-                            href= "#showgenes_{}".format(row[7])),
-                            html.Div(", ".join(g.lower().capitalize() for g in row[6]),
-                            id="showgenes_{}".format(row[7]), className="collapse")])
-
-    return html.Tr([user_cluster, dataset_name,
-                    cluster_description, pval,
-                    adjusted_pval, parameters, overlap_genes])
-
 def dash_heatmap_colorscale(heatmap_data):
     heatmap_set = set(list(itertools.chain(*heatmap_data)))
     
