@@ -327,7 +327,7 @@ def dataframe_to_dash_table(df):
         }],
         data=df.to_dict('records'),
     )
-    print(df.to_dict('records'))
+    
     return dt
 
 def dash_heatmap_colorscale(heatmap_data):
@@ -478,6 +478,7 @@ def merge_sig_dataframes(user_updated_df, updated_df):
         user_updated_df.rename(columns={'cluster_number':'cluster_description'}, inplace=True)
         user_updated_df = user_updated_df.sort_values(["user_cluster","dataset_name"])
         user_updated_df["row_num"] = np.arange(user_updated_df.shape[0])
+        user_updated_df['dataset_type'] = ''
 
         user_sig_df = user_updated_df[user_updated_df.color == '1']
         

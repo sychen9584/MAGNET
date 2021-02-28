@@ -1,11 +1,9 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_daq as daq
 import dash_cytoscape as cyto
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
-import numpy as np
 import pandas as pd
 import magnet_app.helper as helper
 import itertools
