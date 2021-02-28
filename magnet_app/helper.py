@@ -359,15 +359,21 @@ def dash_generate_heatmaps(dataset_df, is_user,
     
     ''' function to generate result heatmaps '''
 
-    heatmap_content = []
+    heatmap_left = []
+    heatmap_right = []
     updated_dfs = []
     
     if not is_user:
         datasets = dataset_df.dataset_id.unique()
     else:
         datasets = dataset_df.dataset_name.unique()
+
+    
+    column_indicator = "left"
     
     for d in datasets:
+
+        heatmap_content = []
 
         if not is_user:
             dataset = Dataset.objects.get(id=d)
@@ -437,6 +443,7 @@ def dash_generate_heatmaps(dataset_df, is_user,
                             'Adjusted P-value: %{customdata[2]:.2e}<br>'+
                             'Parameters: %{customdata[3]}<br>'+
                             '<extra></extra>'
+                        
                         ))
 
         fig.update_traces(showscale=False,)
@@ -447,10 +454,23 @@ def dash_generate_heatmaps(dataset_df, is_user,
             margin=dict(l=30, r=20, t=20, b=30))
         fig['layout']['yaxis']['autorange'] = "reversed"
                                     
-        heatmap_content.append(dcc.Graph(figure=fig))
+        heatmap_content.append(dcc.Graph(figure=fig,
+            style={
+                "display": "block",
+                "margin-left": "auto",
+                "margin-right": "auto",
+            }
+        ))
         heatmap_content.append(html.Br())
 
-    return [heatmap_content, updated_dfs]
+        if column_indicator == "left":
+            heatmap_left.extend(heatmap_content)
+            column_indicator = "right"
+        else:
+            heatmap_right.extend(heatmap_content)
+            column_indicator = "left"
+
+    return [heatmap_left, heatmap_right, updated_dfs]
 
 def merge_sig_dataframes(user_updated_df, updated_df):
 

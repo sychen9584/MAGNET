@@ -3,10 +3,8 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_daq as daq
 import dash_cytoscape as cyto
-import dash_table
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
-import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 import magnet_app.helper as helper
@@ -92,14 +90,11 @@ default_stylesheet = [
 ]
 
 
-app.layout = html.Div([
-    
-    html.Br(),
+app.layout = dbc.Container(children=[
+
     dbc.Container(
-    dbc.Row(
-            [
-                dbc.Col(html.Div(id='heatmaps'), className="sm my-auto"),
-                dbc.Col(html.Div([
+        dbc.Row(
+            [dbc.Col(width=5, children=html.Div([
                     html.H5("Significance cutoffs:"),
                     html.Div([
                             html.Label("Enrichment", style={'display': 'inline-block',
@@ -123,29 +118,24 @@ app.layout = html.Div([
                                 marks={k: {'label': '{}'.format(v), 'style':{"transform": "rotate(45deg)"}} for k, v in high_dict.items()},
                                 min=0, max=9, step=None, value=6,
                             ),
-                    ], style={'width': '85%','margin':'0 auto'}),
-                    
+                    ], style={'width': '85%','margin':'0 auto'})]
+            )),
+            dbc.Col(width=5, children=html.Div(children=[html.A("Explanation of Output",href="/documentation/?page=exp_output", target="_blank", className="btn btn-info btn-lg mb-3"), 
+                            html.Br(), 
+                            html.A("Back to home",href="/", target="_blank", className="btn btn-secondary btn-lg"), ], className="text-center"), 
+                            className="my-auto")
+        ], justify="around")),
+    
+    html.Br(), html.Br(),
 
-                    
-
-                    html.Br(), html.Br(),
-
-                    html.Div([html.Img(src='/static/magnet_app/images/legend_new.jpg',
-                                        width="35%",
-                                        className="rounded mx-auto d-block img-thumbnail")]),
-                    html.Br(), html.Br(),
-
-                    html.Div(children=html.A("Explanation of Output",href="/documentation/?page=exp_output", target="_blank",
-                            className="btn btn-info btn-lg"), className="text-center"),
-                    html.Br(),
-
-                ]), className="sm my-auto justify-content-center"),
-            ]
-        ),
-    ),
     dbc.Container([
-            html.Ul([html.Li(html.A(html.H5("All Significantly Enriched Results"),
-                                        className="nav-link active", **{"data-toggle": "tab"}, href="#sig"),
+            html.Ul([
+                html.Li(html.A(html.H5("Heatmap Visualization"),
+                                        className="nav-link active", **{"data-toggle": "tab"}, href="#heatmap-view"),
+                                className="nav-item"),
+
+                html.Li(html.A(html.H5("All Significantly Enriched Results"),
+                                        className="nav-link", **{"data-toggle": "tab"}, href="#sig"),
                                 className="nav-item"),
                  
                 html.Li(html.A(html.H5("Network View"),
@@ -154,10 +144,15 @@ app.layout = html.Div([
                         className="nav nav-tabs nav-justified", role="tablist"),
 
                 html.Div([
+                        html.Div([
+                            dbc.Row(
+                                [html.Div(id='heatmap_left', className="col-5 pt-3"),
+                                html.Div(id='heatmap_right', className="col-5 pt-5")], justify="around"),
+                        ], id="heatmap-view", className="container tab-pane active"),
                         html.Div(html.Div([html.A("Download Significant Results", className="btn btn-primary mt-2 mb-3",
                                                         href="/results/download/"),
                                             html.Div(id='sig_table'),]),
-                                id="sig", className="container tab-pane active"),
+                                id="sig", className="container tab-pane"),
                                 
                         html.Div(html.Div(
                             [html.Div(dcc.RadioItems(id="hidden_input", 
@@ -182,13 +177,14 @@ app.layout = html.Div([
                             ]),
                                 id="network-view", className="container tab-pane"),],
 
-                        className="tab-content"),])
+                        className="tab-content"),], fluid=True)
     
 ])
 
 #Output("test_table", "data"),
 @app.expanded_callback(
-    [Output("heatmaps", "children"),
+    [Output("heatmap_left", "children"),
+    Output("heatmap_right", "children"),
     Output("sig_table", "children"),],
     [Input("low-cutoff", "value"),
     Input("high-cutoff", "value")])
@@ -201,33 +197,41 @@ def update_heatmap(low_cutoff, high_cutoff, **kwargs):
     user_dataset_df = pd.DataFrame(user_dataset_dict)
 
     try:
-        user_heatmap_content, user_updated_df = helper.dash_generate_heatmaps(user_dataset_df, True,
+        user_heatmap_left, user_heatmap_right, user_updated_df = helper.dash_generate_heatmaps(user_dataset_df, True,
                                                             low_dict, low_cutoff,
                                                             high_dict, high_cutoff)
     except AttributeError:
-        user_heatmap_content = []
+        user_heatmap_left = []
+        user_heatmap_right = []
         user_updated_df = None
     
     user_updated_df = pd.concat(user_updated_df) if user_updated_df else None
     
     try:
-        heatmap_content, updated_df = helper.dash_generate_heatmaps(dataset_df, False,
+        heatmap_left, heatmap_right, updated_df = helper.dash_generate_heatmaps(dataset_df, False,
                                                             low_dict, low_cutoff,
                                                             high_dict, high_cutoff)
     except AttributeError:
-        heatmap_content = []
+        heatmap_left = []
+        heatmap_right = []
         updated_df = None
 
 
     updated_df = pd.concat(updated_df) if updated_df else None
-   
-    heatmap_content = user_heatmap_content + heatmap_content
+
+    heatmap_legend = [html.Img(src='/static/magnet_app/images/legend_new.jpg',
+                                        width="50%",
+                                        className="rounded mx-auto d-block img-thumbnail"),
+                     html.Br()]
+
+    heatmap_content_left = user_heatmap_left + heatmap_left
+    heatmap_content_right = heatmap_legend + user_heatmap_right + heatmap_right
     
     sig_df = helper.merge_sig_dataframes(user_updated_df, updated_df)
     sig_table_content = helper.dataframe_to_dash_table(sig_df)
     kwargs['session_state']['dash_to_django_context'] = sig_df.to_dict()
 
-    return [heatmap_content, sig_table_content]
+    return [heatmap_content_left, heatmap_content_right, sig_table_content]
 
 @app.expanded_callback(
     [Output("network-dropdown", "options"),
@@ -291,7 +295,7 @@ def network_view(user_cluster,  **kwargs):
         network_content = [ cyto.Cytoscape(id='network1',
                                         layout={'name': 'cola', 
                                                 'boundingBox':{'x1':400, 'y1': 200, 'x2':650, 'y2':450}},
-                                        style={'width': '105%', 'height': '600px'},
+                                        style={'width': '100%', 'height': '600px'},
                                         stylesheet= default_stylesheet + new_style,
                                         elements=list(itertools.chain(
                                         network_elements["dataset_nodes"],
