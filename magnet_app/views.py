@@ -149,11 +149,15 @@ def search(request):
     if request.GET.get('search'):
         query_string = request.GET.get('search')
         found_entries = helper.search_genes(query_string)
+
+        # create some context to send over to Dash:
+        dash_context = request.session.get("django_plotly_dash", {})
+        dash_context['search_context'] = { 'found_entries': found_entries}
         
     else: 
         print("False")
-    return render(request,'magnet_app/search.html',
-                      { 'query_string': query_string, 'found_entries': found_entries})
+
+    return render(request,'magnet_app/search.html', {})
 
     
 def download(request, **kwargs):

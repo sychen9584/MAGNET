@@ -14,6 +14,9 @@
 
 
 <body>
+
+{%load plotly_dash%}
+{% plotly_header %}
     
 {% include "magnet_app/navbar.html" %}
    
@@ -28,6 +31,8 @@
     <button type="submit" class="btn btn-primary btn-sm mb-2">Submit</button>
 
 </form>
+<br><br><br>
+{%plotly_direct name="gene_search"%}
 <br><br><br>
 <table class="table table-striped table-bordered table-hover table-sm GeneratedTable">
     <thead class="table-info">
@@ -56,4 +61,5 @@
 </div>
 </div>
 </body>
+{% plotly_footer %}
 </html>

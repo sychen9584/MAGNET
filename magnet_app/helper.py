@@ -112,7 +112,9 @@ def search_genes(query_string):
     entry_query = get_query(query_string, ['gene__gene_symbol', 'gene__ensembl_id'])
     print(entry_query)
 
-    found_entries = Annotation.objects.filter(entry_query)
+    found_entries = list(Annotation.objects.filter(entry_query).select_related('gene').select_related('cluster__dataset').values('gene__gene_symbol',
+                        'gene__ensembl_id', 'cluster__dataset__dataset_name','cluster__dataset__dataset_type', 'cluster__cluster_number',
+                        'cluster__cluster_description'))
     return found_entries
     
 def form_processing(request, form):
