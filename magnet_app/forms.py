@@ -36,8 +36,8 @@ class UserForm(forms.Form):
                                         widget=forms.RadioSelect, required=True)
 
     # checkboxes for datasets to include
-    #dataset_choices = [(dataset.id, str(dataset)) for dataset in Dataset.objects.all()]
-    dataset_choices = []
+    dataset_choices = [(dataset.id, str(dataset)) for dataset in Dataset.objects.all()]
+    #dataset_choices = []
     user_selected_datasets = forms.MultipleChoiceField(choices=dataset_choices,
                                                     label='Include the following datasets from the database :',
                                                     required=False,
