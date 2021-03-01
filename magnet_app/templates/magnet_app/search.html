@@ -32,30 +32,11 @@
 
 </form>
 <br><br><br>
+
+<div class= "container-fluid">
 {%plotly_direct name="gene_search"%}
-<br><br><br>
-<table class="table table-striped table-bordered table-hover table-sm GeneratedTable">
-    <thead class="table-info">
-        <tr>
-        <th scope="col" style="text-align: center">Gene Symbol</th>
-        <th scope="col">Ensembl ID</th>
-        <th scope="col">Dataset Name</th>
-        <th scope="col">Gene Set #</th>
-        <th scope="col">Annotation</th>
-        </tr>
-    </thead>
-    {% for entry in found_entries %}
-    <tr>
-        <td style="text-align: center">{{entry.gene.gene_symbol |capfirst}}</td>
-        <td>{{entry.gene.ensembl_id}}</td>
-        <td>{{entry.cluster.dataset}}</td>
-        <td>{{entry.cluster.cluster_number}}</td>
-        <td>{{entry.cluster.cluster_description}}</td>
-    </tr>
-    {% endfor %}
-    </table>
-    
-<br>
+</div>
+
 <button type = "button" class="btn btn-secondary" onclick = 'location.href="{% url 'index' %}"'>Back to Home</button>
     
 </div>

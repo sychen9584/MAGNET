@@ -1,7 +1,6 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_cytoscape as cyto
 import dash_table
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
@@ -29,7 +28,6 @@ app.layout = html.Div([
                 id='search-table',
 
                 sort_action='native',
-                filter_action='native',
                 page_action='native',
                 page_size=50,
 
@@ -48,7 +46,7 @@ app.layout = html.Div([
                 'height': 'auto',
                 'textAlign': 'center',
                 'font_family': "sans-serif",
-                'font_size': '15px',
+                'font_size': '16px',
                 'padding': '10px',
                 },
 
@@ -78,8 +76,8 @@ app.layout = html.Div([
                     'id': 'cluster__cluster_description',
                     'name': 'Annotation',
                 }],
-                data={},
-            )])
+                data=[],
+            ), html.Br()])
 
 
 @app.expanded_callback(
@@ -88,9 +86,7 @@ app.layout = html.Div([
 def generate_searchtable(placeholder, **kwargs):
     
     found_entries = kwargs['session_state']["search_context"]['found_entries']
-    print(found_entries)
 
     df = pd.DataFrame.from_dict(found_entries)
-    print(df)
 
     return df.to_dict('records')
