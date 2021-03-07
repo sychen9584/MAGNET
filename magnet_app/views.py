@@ -168,7 +168,6 @@ def download(request, **kwargs):
     context = request.session.get('django_plotly_dash', {})
     sig_dict = context.get('dash_to_django_context', 0)
     sig_df = pd.DataFrame.from_dict(sig_dict)
-    sig_df['overlap_genes'] = sig_df.apply(lambda x: ', '.join(g.lower().capitalize() for g in x['overlap_genes']), axis=1)
     sig_df = sig_df[['user_cluster','dataset_name','cluster_description','pval','adjusted_pval','parameters','overlap_genes']]
     sig_df.columns = ['User cluster', 'Dataset', 'Dataset cluster', 'P-value', 'Adjusted P-Value (FDR)', 'Parameters (N, B, n, b)', 'Overlapped Genes']
     sig_df = sig_df.to_csv(index=False) # cast to csv string
