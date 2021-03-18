@@ -325,7 +325,7 @@ def dataframe_to_dash_table(df):
             'name': 'Parameters (N, K, n, k)',
         }, {
             'id': 'overlap_genes',
-            'name': 'Overlapped Genes',
+            'name': 'Overlapping Genes',
         }],
         data=df.to_dict('records'),
     )
