@@ -451,7 +451,7 @@ def dash_generate_heatmaps(dataset_df, is_user,
         fig.update_traces(showscale=False,)
         fig.update_layout(
             xaxis={'title':'Dataset Gene Sets', 'title_font_size':14, 'tickfont_size':15},
-            yaxis={'title':'User Gene Sets', 'title_font_size':14, 'tickfont_size':15},
+            yaxis={'title':'User Gene Lists', 'title_font_size':14, 'tickfont_size':15},
             width=400, height=250,
             margin=dict(l=30, r=20, t=20, b=30))
         fig['layout']['yaxis']['autorange'] = "reversed"
