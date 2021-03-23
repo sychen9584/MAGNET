@@ -15,7 +15,7 @@ app.layout = html.Div([html.P("How many query gene clusters are being submitted?
                         dbc.RadioItems(
                             id = "one-or-multiple",
                             options=[
-                                {'label': 'One', 'value': 'One'},
+                                {'label': 'Single', 'value': 'One'},
                                 {'label': 'Multiple', 'value': 'Multiple'},
                             ], inline=True, name = "one_or_multiple", className="mb-2",
                             value='One'
