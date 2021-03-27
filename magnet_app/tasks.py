@@ -13,6 +13,8 @@ from celery_progress.backend import ProgressRecorder
 from .models import Gene, Dataset, Cluster, Annotation
 import magnet_app.helper as helper
 
+import time
+
 progress_recorder = None
 progress = None
 total = None
@@ -128,8 +130,11 @@ def hypergeom_wrapper(user_genes, user_background,
         progress_recorder.set_progress(progress, total ,description="Computed dataset params...{}/{}".format(progress, total))
         print("computed MAGNET dataset params...{}/{}".format(progress, total))
         
+        t0 = time.time()
         cluster_params = [ get_cluster_params(user_query_vals, background_query_vals, cluster)
                           for cluster in clusters.iterator()]
+        t1 = time.time()
+        print(t1-t0)
         progress += 1
         progress_recorder.set_progress(progress, total, description="Computed cluster params...{}/{}".format(progress, total))
         print("computed cluster params...{}/{}".format(progress, total))
@@ -252,7 +257,7 @@ def user_dataset_hypergeom(user_query, background_query, user_cluster,
     user_dataset_background_l = list(user_dataset_background_q.values_list('ensembl_id', 'gene_symbol'))
     db_matched = list(itertools.chain(*user_dataset_background_l))
     missed_genes = [x.capitalize() for x in user_dataset_background if x not in db_matched]
-    matched_gene_nums = [len(user_dataset_background), user_dataset_background_q.count()]
+    matched_gene_nums = [len(user_dataset_background), len(user_dataset_background_l)]
     
     results = []
 
@@ -269,10 +274,10 @@ def user_dataset_hypergeom(user_query, background_query, user_cluster,
 
         K = background_query.intersection(user_dataset_cluster_q).count()
         k = user_query.intersection(user_dataset_cluster_q)
-    
-        overlap_genes = [gene.gene_symbol for gene in k]
-        k = k.count()
 
+        overlap_genes = list(k.values_list('gene_symbol',flat=True))
+        k = len(overlap_genes)
+        
         ## hypergeometric test
         if k == 0:
             pval = 1

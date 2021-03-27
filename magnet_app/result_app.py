@@ -114,7 +114,7 @@ app.layout = dbc.Container(children=[
                             dcc.Slider(
                                 id='high-cutoff',
                                 marks={k: {'label': '{}'.format(v), 'style':{"transform": "rotate(45deg)"}} for k, v in high_dict.items()},
-                                min=0, max=9, step=None, value=6,
+                                min=0, max=9, step=None, value=2,
                             ),
                     ], style={'width': '85%','margin':'0 auto'})]
             )),

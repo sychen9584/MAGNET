@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+import debug_toolbar
+from django.conf import settings
 from magnet_app import result_app, index_app, search_app
 
 urlpatterns = [
@@ -22,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('celery-progress/', include('celery_progress.urls')),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
