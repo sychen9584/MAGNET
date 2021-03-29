@@ -82,6 +82,10 @@ class Annotation(models.Model):
     # links a Cluster to a Gene
     gene = models.ForeignKey(Gene, on_delete=models.CASCADE)
     cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
+
+    class Meta:
+        indexes = [ models.Index(fields=['cluster','gene']),]
+        unique_together = ['cluster','gene']
     
     def __str__(self):
         return '{} --- {} --- {}'.format(
