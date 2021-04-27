@@ -482,8 +482,8 @@ def merge_sig_dataframes(user_updated_df, updated_df):
         user_updated_df["row_num"] = np.arange(user_updated_df.shape[0])
         user_updated_df['dataset_type'] = ''
 
-        #user_sig_df = user_updated_df[user_updated_df.color == '1']
-        user_sig_df = user_updated_df
+        user_sig_df = user_updated_df[user_updated_df.color == '1']
+        #user_sig_df = user_updated_df
         return  user_sig_df
 
     elif user_updated_df is None and updated_df is not None:
@@ -492,9 +492,9 @@ def merge_sig_dataframes(user_updated_df, updated_df):
         updated_df["row_num"] = np.arange(updated_df.shape[0])
         #print(updated_df.color == '1')
 
-        #sig_df = updated_df[updated_df.color == '1']
+        sig_df = updated_df[updated_df.color == '1']
         #print(sig_df)
-        sig_df = updated_df
+        #sig_df = updated_df
 
         return  sig_df
     
@@ -504,7 +504,7 @@ def merge_sig_dataframes(user_updated_df, updated_df):
         
         combined_sig_df = pd.concat([user_updated_df, updated_df]).sort_values(["user_cluster", "dataset_name"])
         combined_sig_df["row_num"] = np.arange(combined_sig_df.shape[0])
-        #combined_sig_df = combined_sig_df[combined_sig_df.color=='1']
+        combined_sig_df = combined_sig_df[combined_sig_df.color=='1']
 
         return combined_sig_df
 
