@@ -492,9 +492,9 @@ def merge_sig_dataframes(user_updated_df, updated_df):
         updated_df["row_num"] = np.arange(updated_df.shape[0])
         #print(updated_df.color == '1')
 
-        sig_df = updated_df[updated_df.color == '1']
+        #sig_df = updated_df[updated_df.color == '1']
         #print(sig_df)
-        #sig_df = updated_df
+        sig_df = updated_df
 
         return  sig_df
     
