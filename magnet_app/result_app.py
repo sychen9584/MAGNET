@@ -241,11 +241,11 @@ def network_dropdown(hidden_input,  **kwargs):
      #### render dropdown menu for network
     try:
         df = pd.DataFrame(dataset_dict)
-        cluster_choices = [{'label': 'User cluster '+x, 'value': x} for x in df.user_cluster.unique()]
+        cluster_choices = [{'label': 'Query gene list '+x, 'value': x} for x in df.user_cluster.unique()]
         default_value = df.user_cluster.unique()[0]
 
     except AttributeError:
-        cluster_choices = [{'label': 'User cluster Null', 'value': 'Null'}]
+        cluster_choices = [{'label': 'Query gene list Null', 'value': 'Null'}]
         default_value = "Null"
 
     return [cluster_choices, default_value]

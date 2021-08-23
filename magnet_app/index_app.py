@@ -11,7 +11,7 @@ from .models import Gene, Dataset, Cluster, Annotation
 
 app = DjangoDash('index_form', add_bootstrap_links=True, external_stylesheets=[dbc.themes.BOOTSTRAP])   # replaces dash.Dash
 
-app.layout = html.Div([html.P("How many query gene clusters are being submitted?",className="label"),
+app.layout = html.Div([html.P("How many query gene lists are being submitted?",className="label"),
                         dbc.RadioItems(
                             id = "one-or-multiple",
                             options=[
