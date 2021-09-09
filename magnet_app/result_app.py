@@ -132,7 +132,7 @@ app.layout = dbc.Container(children=[
                                         className="nav-link active", **{"data-toggle": "tab"}, href="#heatmap-view"),
                                 className="nav-item"),
 
-                html.Li(html.A(html.H5("All Significantly Enriched Results"),
+                html.Li(html.A(html.H5("Table Visualization"),
                                         className="nav-link", **{"data-toggle": "tab"}, href="#sig"),
                                 className="nav-item"),
                  
@@ -147,10 +147,24 @@ app.layout = dbc.Container(children=[
                                 [html.Div(id='heatmap_left', className="col-5 pt-3"),
                                 html.Div(id='heatmap_right', className="col-5 pt-5")], justify="around"),
                         ], id="heatmap-view", className="container tab-pane active"),
-                        html.Div(html.Div([html.A("Download Significant Results", className="btn btn-primary mt-2 mb-3",
-                                                        href="/results/download/"),
-                                            html.Div(id='sig_table'),]),
-                                id="sig", className="container tab-pane"),
+                        
+                        html.Div([
+                            dbc.Row([
+                                dbc.Col(
+                                        dbc.RadioItems(
+                                        id = "table_option",
+                                        options=[
+                                            {'label': 'Significant Results', 'value': 'sig'},
+                                            {'label': 'Full results', 'value': 'full'},
+                                        ],  inline=True, name = "table_viz", className="mb-2 mt-2",
+                                        value='sig'
+                                        ),  width={"size": 5, "order": 1, "offset": 1}),
+                                dbc.Col(
+                                    html.A("Download Results", className="btn btn-primary mt-2 mb-3",
+                                                        href="/results/download/"), width={"size": 3, "order": 12, "offset": 1}
+                                                        )], justify="center", align="center",),
+
+                            html.Div(id='sig_table')], id="sig", className="container tab-pane"),
                                 
                         html.Div(html.Div(
                             [html.Div(dcc.RadioItems(id="hidden_input", 
@@ -185,8 +199,9 @@ app.layout = dbc.Container(children=[
     Output("heatmap_right", "children"),
     Output("sig_table", "children"),],
     [Input("low-cutoff", "value"),
-    Input("high-cutoff", "value")])
-def update_heatmap(low_cutoff, high_cutoff, **kwargs):
+    Input("high-cutoff", "value"),
+    Input("table_option", "value")])
+def update_heatmap(low_cutoff, high_cutoff, table_option, **kwargs):
     # retrieve hypergeom results
     dataset_dict = kwargs['session_state']["django_to_dash_context"]['dataset_dict']
     dataset_df = pd.DataFrame(dataset_dict)
@@ -225,7 +240,7 @@ def update_heatmap(low_cutoff, high_cutoff, **kwargs):
     heatmap_content_left = user_heatmap_left + heatmap_left
     heatmap_content_right = heatmap_legend + user_heatmap_right + heatmap_right
     
-    sig_df = helper.merge_sig_dataframes(user_updated_df, updated_df)
+    sig_df = helper.merge_sig_dataframes(user_updated_df, updated_df, table_option)
     sig_table_content = helper.dataframe_to_dash_table(sig_df)
     kwargs['session_state']['dash_to_django_context'] = sig_df.to_dict()
 
@@ -303,72 +318,6 @@ def network_view(user_cluster,  **kwargs):
     
     except ValueError:
         network_content = []
-    
-    '''network_content = [ cyto.Cytoscape(id='network1',
-                                    layout={'name': 'preset'},
-                                    style={'width': '105%', 'height': '600px'},
-                                    stylesheet= default_stylesheet + new_style,
-                                    elements= [
-                                                {
-                                                    'data': {'id': 'one', 'label': 'Node 1','pval':0.1},
-                                                    'position': {'x': 200, 'y': 400}
-                                                },
-                                                {
-                                                    'data': {'id': 'two', 'label': 'Node 2','pval':0.04},
-                                                    'position': {'x': 300, 'y': 400}
-                                                }, 
-                                                {
-                                                    'data': {'id': 'three', 'label': 'Node 3','pval':0.009},
-                                                    'position': {'x': 400, 'y': 400}
-                                                },
-                                                {
-                                                    'data': {'id': 'four', 'label': 'Node 4','pval':0.0009},
-                                                    'position': {'x': 500, 'y': 400}
-                                                },
-                                                {
-                                                    'data': {'id': 'five', 'label': 'Node 5','pval':0.00009},
-                                                    'position': {'x': 600, 'y': 400}
-                                                },
-                                                {
-                                                    'data': {'id': 'six', 'label': 'Node 6', 'pval': 0.000009},
-                                                    'position': {'x': 700, 'y': 400}
-                                                },
-                                                {
-                                                    'data': {
-                                                        'id': 'one-two',
-                                                        'source': 'one','target': 'two',
-                                                        'weight': 0.2
-                                                    }
-                                                },
-                                                 {
-                                                    'data': {
-                                                        'id': 'two-three',
-                                                        'source': 'two','target': 'three',
-                                                        'weight': 0.3
-                                                    }
-                                                },
-                                                 {
-                                                    'data': {
-                                                        'id': 'three-four',
-                                                        'source': 'three','target': 'four',
-                                                        'weight': 0.4
-                                                    }
-                                                },
-                                                 {
-                                                    'data': {
-                                                        'id': 'four-five',
-                                                        'source': 'four','target': 'five',
-                                                        'weight': 0.5
-                                                    }
-                                                },
-                                                 {
-                                                    'data': {
-                                                        'id': 'five-six',
-                                                        'source': 'five','target': 'six',
-                                                        'weight': 0.6
-                                                    }
-                                                },
-            ])]'''
 
     return network_content
 
