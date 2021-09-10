@@ -309,8 +309,8 @@ def network_view(user_cluster,  **kwargs):
                                         layout={'name': 'cola', 
                                                 'boundingBox':{'x1':400, 'y1': 200, 'x2':650, 'y2':450}},
                                         style={'width': '100%', 'height': '600px'},
-                                       # stylesheet= default_stylesheet + new_style,
-                                        stylesheet= default_stylesheet,
+                                        stylesheet= default_stylesheet + new_style,
+                                        #stylesheet= default_stylesheet,
                                         elements=list(itertools.chain(
                                         network_elements["dataset_nodes"],
                                         network_elements["cluster_nodes"],

@@ -513,7 +513,7 @@ def merge_sig_dataframes(user_updated_df, updated_df, table_option):
         combined_sig_df = combined_sig_df[combined_sig_df.color=='1']
 
         if table_option == "sig":
-            combined_sig_df = combined_sig_df[ombined_sig_df.color == '1']
+            combined_sig_df = combined_sig_df[combined_sig_df.color == '1']
 
         else:
             combined_sig_df = combined_sig_df 
