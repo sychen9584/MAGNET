@@ -93,7 +93,14 @@ app.layout = dbc.Container(children=[
     dbc.Container(
         dbc.Row(
             [dbc.Col(width=5, children=html.Div([
+
                     html.H5("Significance cutoffs:"),
+
+                    html.Div(dcc.Checklist(
+                        id='gradient_check',    
+                        options=[{'label': 'Gradient color scale', 'value':'gradient'}],
+                        value=[], inputStyle={"margin-right":'10px'})),
+
                     html.Div([
                             html.Label("Enrichment", style={'display': 'inline-block',
                                                         'width': '95%',
@@ -116,6 +123,7 @@ app.layout = dbc.Container(children=[
                                 marks={k: {'label': '{}'.format(v), 'style':{"transform": "rotate(45deg)"}} for k, v in high_dict.items()},
                                 min=0, max=9, step=None, value=2,
                             ),
+
                     ], style={'width': '85%','margin':'0 auto'})]
             )),
             dbc.Col(width=5, children=html.Div(children=[html.A("Explanation of Output",href="/documentation/?page=exp_output", target="_blank", className="btn btn-info btn-lg mb-3"), 
@@ -200,8 +208,9 @@ app.layout = dbc.Container(children=[
     Output("sig_table", "children"),],
     [Input("low-cutoff", "value"),
     Input("high-cutoff", "value"),
-    Input("table_option", "value")])
-def update_heatmap(low_cutoff, high_cutoff, table_option, **kwargs):
+    Input("table_option", "value"),
+    Input("gradient_check", "value")])
+def update_heatmap(low_cutoff, high_cutoff, table_option, gradient_check, **kwargs):
     # retrieve hypergeom results
     dataset_dict = kwargs['session_state']["django_to_dash_context"]['dataset_dict']
     dataset_df = pd.DataFrame(dataset_dict)
@@ -209,21 +218,24 @@ def update_heatmap(low_cutoff, high_cutoff, table_option, **kwargs):
     user_dataset_dict = kwargs['session_state']["django_to_dash_context"]['user_dataset_dict']
     user_dataset_df = pd.DataFrame(user_dataset_dict)
 
+
+    ##### database datasets
     try:
         user_heatmap_left, user_heatmap_right, user_updated_df = helper.dash_generate_heatmaps(user_dataset_df, True,
                                                             low_dict, low_cutoff,
-                                                            high_dict, high_cutoff)
+                                                            high_dict, high_cutoff, gradient_check)
     except AttributeError:
         user_heatmap_left = []
         user_heatmap_right = []
         user_updated_df = None
     
+    #### user uploaded data
     user_updated_df = pd.concat(user_updated_df) if user_updated_df else None
     
     try:
         heatmap_left, heatmap_right, updated_df = helper.dash_generate_heatmaps(dataset_df, False,
                                                             low_dict, low_cutoff,
-                                                            high_dict, high_cutoff)
+                                                            high_dict, high_cutoff, gradient_check)
     except AttributeError:
         heatmap_left = []
         heatmap_right = []
@@ -233,7 +245,7 @@ def update_heatmap(low_cutoff, high_cutoff, table_option, **kwargs):
     updated_df = pd.concat(updated_df) if updated_df else None
 
     heatmap_legend = [html.Img(src='/static/magnet_app/images/legend_new.jpg',
-                                        width="50%",
+                                        width="95%",
                                         className="rounded mx-auto d-block img-thumbnail"),
                      html.Br()]
 

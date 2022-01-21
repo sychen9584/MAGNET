@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields.jsonb import JSONField
 
 # Create your models here.
 class Gene(models.Model):
@@ -114,3 +115,15 @@ class Graph_edge(models.Model):
             str(self.cluster2),
             str(self.proportion)
         )
+
+class ExampleData(models.Model):
+    '''
+    Store Koch et al. 2018 clusters as example
+
+    '''
+    name = models.CharField(max_length=50, unique=True)
+    gene_list = JSONField()
+    background = JSONField()
+
+    def __str__(self):
+        return self.name

@@ -357,7 +357,7 @@ def dash_heatmap_colorscale(heatmap_data):
         return [[0, "blue"], [0.5, "grey"], [1, "red"]]
     
 def dash_generate_heatmaps(dataset_df, is_user,
-                            low_dict, low_cutoff, high_dict, high_cutoff):
+                            low_dict, low_cutoff, high_dict, high_cutoff, gradient_check):
     
     ''' function to generate result heatmaps '''
 
@@ -407,13 +407,17 @@ def dash_generate_heatmaps(dataset_df, is_user,
             # update colors if p value threshold changes:
             ps = cluster_df.pval.values.tolist()
             hd=[]
-            for p in ps:
-                if p < low_dict[low_cutoff]:
-                    hd.append("1")
-                elif p > high_dict[high_cutoff]:
-                    hd.append("-1")
-                else:
-                    hd.append("0")
+            if gradient_check:
+                for p in ps:
+                    hd.append(np.log10(p))
+            else:
+                for p in ps:
+                    if p < low_dict[low_cutoff]:
+                        hd.append("1")
+                    elif p > high_dict[high_cutoff]:
+                        hd.append("-1")
+                    else:
+                        hd.append("0")
 
             heatmap_data.append(hd)
             p_vals.append(ps)
@@ -433,13 +437,23 @@ def dash_generate_heatmaps(dataset_df, is_user,
             updated_dfs.append(cluster_df)
 
         custom_data = np.stack((cluster_names, p_vals, adjusted_pvals, parameters), axis=-1)
-        colorscale = dash_heatmap_colorscale(heatmap_data)
+        if gradient_check:
+            colorscale = "Viridis"
+            reversescale=True
+            showscale=True
+        else:
+            colorscale = dash_heatmap_colorscale(heatmap_data)
+            reversescale=False
+            showscale=False
+
         fig = go.Figure(data=go.Heatmap(z=heatmap_data,
                         x = columns, 
                         y = rows,
                         xgap=1.5, ygap=1.5,
-                        customdata=custom_data,
-                        colorscale= colorscale, 
+                        customdata= custom_data,
+                        colorscale= colorscale,
+                        reversescale= reversescale,
+                        showscale= showscale,
                         hovertemplate='<b><i>%{customdata[0]}</b></i><br>'+
                             'P-value: %{customdata[1]:.2e}<br>'+
                             'Adjusted P-value: %{customdata[2]:.2e}<br>'+
@@ -448,7 +462,7 @@ def dash_generate_heatmaps(dataset_df, is_user,
                         
                         ))
 
-        fig.update_traces(showscale=False,)
+        fig.update_traces(colorbar_thickness=15, selector=dict(type='heatmap'))
         fig.update_layout(
             xaxis={'title':'Dataset Gene Sets', 'title_font_size':14, 'tickfont_size':15},
             yaxis={'title':'Query Gene Lists', 'title_font_size':14, 'tickfont_size':15},
