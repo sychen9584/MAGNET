@@ -17,7 +17,8 @@ class DatasetAdmin(admin.ModelAdmin):
                                'abstract',
                                'publication_year',
                                'journal',
-                               'link_to_pubmed']
+                               'link_to_pubmed',
+                               'figure_info']
                     }),
     ]
 

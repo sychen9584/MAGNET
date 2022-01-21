@@ -35,6 +35,7 @@ class Dataset(models.Model):
     journal = models.CharField(max_length=100, blank=True)
     link_to_pubmed = models.URLField(blank=True)
     abstract = models.TextField(blank=True)
+    figure_info = models.TextField(blank=True)
     
     class Meta:
         ordering = ["dataset_name"]
