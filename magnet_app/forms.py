@@ -8,7 +8,8 @@ class UserForm(forms.Form):
     # radio button to ask whether the user is submitting one or multiple query gene lists
     one_or_multiple = forms.ChoiceField(label='',
                                         choices=[('One', 'One'),
-                                                 ('Multiple', 'Multiple')],
+                                                 ('Multiple', 'Multiple'),
+                                                 ("Example", "Example")],
                                         widget=forms.RadioSelect, required=True)
 
     # text area for pasting a single query gene list
@@ -51,6 +52,7 @@ class UserForm(forms.Form):
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
         
+        one_or_multiple = cleaned_data.get("one_or_multiple")
         user_genes_upload = cleaned_data.get("user_genes_upload")
         user_background_upload = cleaned_data.get("user_background_upload")
         user_genes = cleaned_data.get('user_genes')
@@ -58,10 +60,10 @@ class UserForm(forms.Form):
         user_selected_datasets = cleaned_data.get('user_selected_datasets')
         user_dataset_upload = cleaned_data.get('user_dataset_upload')
 
-        if not user_genes and not user_genes_upload:
+        if not user_genes and not user_genes_upload and one_or_multiple != "Example":
             raise forms.ValidationError('Please submit at least one query gene list!')
             
-        if not user_background and not user_background_upload:
+        if not user_background and not user_background_upload and one_or_multiple != "Example":
             raise forms.ValidationError('Please submit the background gene list!')
 
         if not user_selected_datasets and not user_dataset_upload:

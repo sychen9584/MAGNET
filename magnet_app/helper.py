@@ -1,4 +1,5 @@
-from __future__ import absolute_import, unicode_literals 
+from __future__ import absolute_import, unicode_literals
+from doctest import Example 
 import mygene, re, os.path
 import pandas as pd
 import dash_core_components as dcc
@@ -6,7 +7,7 @@ import dash_html_components as html
 import dash_table
 from dash_table.Format import Format
 from django.db.models import Q
-from .models import Gene, Dataset, Cluster, Annotation, Graph_edge
+from .models import Gene, Dataset, Cluster, Annotation, Graph_edge, ExampleData
 import dash_daq as daq
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
@@ -131,15 +132,24 @@ def form_processing(request, form):
     user_genes_upload = form.cleaned_data.get("user_genes_upload")
     user_background_upload = form.cleaned_data.get("user_background_upload")
     user_dataset_upload = request.FILES.getlist('user_dataset_upload')
+
+    # retreive example dataset if checked
+    if one_or_multiple=="Example":
+        example = ExampleData.objects.get(name="Koch et al. 2018")
+
     
     if user_genes_upload:
         user_genes = handle_csv(user_genes_upload, one_or_multiple, False)
+    elif one_or_multiple=="Example":
+        user_genes = example.gene_list
     else:
         user_genes = list(filter(None, form.cleaned_data['user_genes'].split("\n")))
         user_genes = {1: [a.strip().upper() for a in user_genes]}
 
     if user_background_upload:
         user_background = list(filter(None, handle_csv(user_background_upload, one_or_multiple, True)))
+    elif one_or_multiple=="Example":
+        user_background = example.background
     else:
         user_background = list(filter(None, form.cleaned_data['user_background'].split("\n")))
         user_background = [b.strip().upper() for b in user_background]

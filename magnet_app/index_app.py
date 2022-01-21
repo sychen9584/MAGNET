@@ -17,6 +17,7 @@ app.layout = html.Div([html.P("How many query gene lists are being submitted?",c
                             options=[
                                 {'label': 'Single', 'value': 'One'},
                                 {'label': 'Multiple', 'value': 'Multiple'},
+                                {'label': 'Use example dataset', 'value': 'Example'},
                             ], inline=True, name = "one_or_multiple", className="mb-2",
                             value='One'
                         ),
@@ -27,7 +28,6 @@ app.layout = html.Div([html.P("How many query gene lists are being submitted?",c
                             placeholder='Enter your list of query genes here',
                             rows=4, cols=15, disabled=False, className="mb-3"
                         )])
-
 
 @app.expanded_callback(
     Output('user-genes', 'disabled'),
