@@ -39,7 +39,8 @@ class Command(BaseCommand):
             publication_year=metadata["publication_year"],
             journal=metadata["journal"],
             link_to_pubmed=metadata["link_to_pubmed"],
-            abstract=metadata["abstract"])
+            abstract=metadata["abstract"],
+            figure_info=metadata["figure_info"])
 
             dataset.save()
 

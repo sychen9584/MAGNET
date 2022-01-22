@@ -36,8 +36,18 @@
     </div>
     
     <div class="container">
-        <a href={{dataset.link_to_pubmed}} class="btn btn-info" role="button" target="_blank">
-        <span style="font-size:larger;">View Publication on PubMed</span></a>
+        <div class='row m-0 p-0 align-items-center'>
+            <div class='col m-0 pl-0'>
+                <a href={{dataset.link_to_pubmed}} class="btn btn-info" role="button" target="_blank">
+                <span style="font-size:larger;">View Publication on PubMed</span></a>
+            </div>
+            <div class='col m-0 pl-0'>
+                <form action="{% url 'download_GMT' %}" method="get" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-primary" style="font-size:larger;" name="download_GMT" value= {{dataset.pk}}>Download Gene Sets as GMT file</button>
+                </form>
+            </div>
+            <div class='col-5'></div>
+        </div>
     </div>
     
     <div class="container">

@@ -53,6 +53,14 @@ class Dataset(models.Model):
         
         return [cluster_gene_num, total_gene_num]
 
+    def get_cluster_genes(self):
+        clusters = self.cluster_set.all()
+
+        # get genes associated with each cluster
+        cluster_genes= {c:list(c.annotation_set.all().values_list('gene__gene_symbol', flat=True)) for c in clusters}
+
+        return cluster_genes
+
 
 
 class Cluster(models.Model):

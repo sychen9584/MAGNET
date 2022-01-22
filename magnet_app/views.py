@@ -5,6 +5,8 @@ from .forms import UserForm
 from .tasks import task_wrapper
 import magnet_app.helper as helper
 import pandas as pd
+import io
+import csv
 
 # Create your views here.
 def index(request):
@@ -179,5 +181,29 @@ def download(request, **kwargs):
 
     return response
 
+def download_GMT(request, **kwargs):
+    
+    ''' View function to download significant results entries as csv file '''
+
+    try:
+        dataset = get_object_or_404(Dataset, pk = request.GET["download_GMT"])
+    except:
+        return HttpResponseNotFound('<h1>Page not found</h1>')
+
+    cluster_genes = dataset.get_cluster_genes()
+    genesets = [[cluster.cluster_description, cluster.cluster_number] + genes for cluster, genes in cluster_genes.items()]
+    
+    file = io.StringIO()
+    writer = csv.writer(file, delimiter="\t")
+    writer.writerows(genesets)
+    file.seek(0)
+
+    # Create the HttpResponse object with the appropriate GMT header.
+    response = HttpResponse(content_type='text/gmt')
+    filename = '\"'+ dataset.dataset_name + ".gmt\""
+    response['Content-Disposition'] = 'attachment; filename='+ filename
+    response.write(file.getvalue())
+
+    return response
 
 
