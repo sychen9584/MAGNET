@@ -1,0 +1,16 @@
+---
+  dataset_name: "Mould et al. 2019"
+  dataset_type: "Lung Macrophages in Fibrosis"
+  full_title: "Single cell RNA sequencing identifies unique inflammatory airspace macrophage subsets"
+  authors: 'Kara J. Mould, Nathan D. Jackson, Peter M. Henson, Max Seibold, and William J. Janssen'
+  publication_year: 2019
+  journal: "JCI insight"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/30721157/"
+  abstract: 'Macrophages are well recognized for their dual roles in orchestrating inflammatory responses and regulating tissue repair. In almost all acutely inflamed tissues, 2 main subclasses of macrophages coexist. These include embryonically derived resident tissue macrophages and BM-derived recruited macrophages. While it is clear that macrophage subsets categorized in this fashion display distinct transcriptional and functional profiles, whether all cells within these categories and in the same inflammatory microenvironment share similar functions or whether further specialization exists has not been determined. To investigate inflammatory macrophage heterogeneity on a more granular level, we induced acute lung inflammation in mice and performed single cell RNA sequencing of macrophages isolated from the airspaces during health, peak inflammation, and resolution of inflammation. In doing so, we confirm that cell origin is the major determinant of alveolar macrophage (AM) programing, and, to our knowledge, we describe 2 previously uncharacterized, transcriptionally distinct subdivisions of AMs based on proliferative capacity and inflammatory programing.'
+  clusters:
+    1: "Resident populations #1"
+    2: "Resident populations #2"
+    3: "Recruited populations Day 3 #1"
+    4: "Recruited populations Day 3 #2"
+    5: "Recruited populations Day 6"
+  figure_info: "Supplemental table 11, representing Figure 6. Expression of identified gene sets distinguishes clusters. Scaled expression of top 30 differentially expressed genes from each cluster"

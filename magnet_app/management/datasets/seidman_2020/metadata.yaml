@@ -1,0 +1,15 @@
+---
+  dataset_name: "Seidman et al. 2020"
+  dataset_type: "Liver macrophages with nonalcoholic steatohepatitis"
+  full_title: "Niche-Specific Reprogramming of Epigenetic Landscapes Drives Myeloid Cell Diversity in Nonalcoholic Steatohepatitis"
+  authors: 'Jason S Seidman, Ty D Troutman, Mashito Sakai, Anita Gola, Nathanael J Spann, Hunter Bennett, Cassi M Bruni, Zhengyu Ouyang, Rick Z Li, Xiaoli Sun, BaoChau T Vu, Martina P Pasillas, Kaori M Ego, David Gosselin, Verena M Link, Ling-Wa Chong, Ronald M Evans, Bonne M Thompson, Jeffrey G McDonald, Mojgan Hosseini, Joseph L Witztum, Ronald N Germain, Christopher K Glass'
+  publication_year: 2020
+  journal: "Immunity"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/32362324/"
+  abstract: 'Tissue-resident and recruited macrophages contribute to both host defense and pathology. Multiple macrophage phenotypes are represented in diseased tissues, but we lack deep understanding of mechanisms controlling diversification. Here, we investigate origins and epigenetic trajectories of hepatic macrophages during diet-induced non-alcoholic steatohepatitis (NASH). The NASH diet induced significant changes in Kupffer cell enhancers and gene expression, resulting in partial loss of Kupffer cell identity, induction of Trem2 and Cd9 expression, and cell death. Kupffer cell loss was compensated by gain of adjacent monocyte-derived macrophages that exhibited convergent epigenomes, transcriptomes, and functions. NASH-induced changes in Kupffer cell enhancers were driven by AP-1 and EGR that reprogrammed LXR functions required for Kupffer cell identity and survival to instead drive a scar-associated macrophage phenotype. These findings reveal mechanisms by which disease-associated environmental signals instruct resident and recruited macrophages to acquire distinct gene expression programs and corresponding functions.'
+  clusters:
+    1: "Healthy Kupffer cells"
+    2: "Ly6c hi and lo recruited macrophages"
+    3: "Ly6c hi recruited macrophages"
+    4: "NASH Kupffer cells"
+  figure_info: "authors, representing Figure 3:. Highly divergent gene expression patterns across myeloid populations in NASH (A). Unsupervised hierarchical clustering of DE genes in the indicated cell types in control and NASH liver."

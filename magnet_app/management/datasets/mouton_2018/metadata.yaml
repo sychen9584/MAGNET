@@ -1,0 +1,14 @@
+---
+  dataset_name: "Mouton et al. 2018"
+  dataset_type: "Cardiac macrophage during myocardial infarction"
+  full_title: "Mapping macrophage polarization over the myocardial infarction time continuum"
+  authors: 'Alan J. Mouton, Kristine Y. DeLeon-Pennell, Osvaldo J. Rivera Gonzalez, Elizabeth R. Flynn, Tom C. Freeman, Jeffrey J. Saucerman, Michael R. Garrett, Yonggang Ma, Romain Harmancey, Merry L. Lindsey'
+  publication_year: 2018
+  journal: "Basic Research in Cardiology"
+  link_to_pubmed: "https://pubmed.ncbi.nlm.nih.gov/29868933/"
+  abstract: 'In response to myocardial infarction (MI), cardiac macrophages regulate inflammation and scar formation. We hypothesized that macrophages undergo polarization state changes over the MI time course and assessed macrophage polarization transcriptomic signatures over the first week of MI. C57BL/6 J male mice (3-6 months old) were subjected to permanent coronary artery ligation to induce MI, and macrophages were isolated from the infarct region at days 1, 3, and 7 post-MI. Day 0, no MI resident cardiac macrophages served as the negative MI control. Whole transcriptome analysis was performed using RNA-sequencing on n = 4 pooled sets for each time. Day 1 macrophages displayed a unique pro-inflammatory, extracellular matrix (ECM)-degrading signature. By flow cytometry, day 0 macrophages were largely F4/80highLy6Clow resident macrophages, whereas day 1 macrophages were largely F4/80lowLy6Chigh infiltrating monocytes. Day 3 macrophages exhibited increased proliferation and phagocytosis, and expression of genes related to mitochondrial function and oxidative phosphorylation, indicative of metabolic reprogramming. Day 7 macrophages displayed a pro-reparative signature enriched for genes involved in ECM remodeling and scar formation. By triple in situ hybridization, day 7 infarct macrophages in vivo expressed collagen I and periostin mRNA. Our results indicate macrophages show distinct gene expression profiles over the first week of MI, with metabolic reprogramming important for polarization. In addition to serving as indirect mediators of ECM remodeling, macrophages are a direct source of ECM components. Our study is the first to report the detailed changes in the macrophage transcriptome over the first week of MI.'
+  clusters:
+    1: "Day 1 post-MI"
+    2: "Day 3 post-MI"
+    3: "Day 7 post-MI"
+  figure_info: "authors, representing Figure 2: Gene expression pattern clustering. (a) Markov clustering analysis generated three distinct major clusters representing different post-MI gene expression patterns"

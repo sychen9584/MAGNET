@@ -1,4 +1,5 @@
 import csv, sys, os, yaml
+from numpy import NaN
 from django.core.management.base import BaseCommand, CommandError
 from magnet_app.models import Gene, Dataset, Cluster, Annotation
 from django.db import transaction
@@ -34,6 +35,7 @@ class Command(BaseCommand):
         metadata = yaml.full_load(yaml_file)
         if not Dataset.objects.filter(dataset_name=metadata["dataset_name"]).exists():
             dataset = Dataset(dataset_name=metadata["dataset_name"],
+            dataset_type=metadata['dataset_type'],
             full_title=metadata["full_title"],
             authors=metadata["authors"],
             publication_year=metadata["publication_year"],
@@ -75,10 +77,16 @@ class Command(BaseCommand):
             df["ensembl"] = genes
         else:
             _, _, result = hp.convert_gene_symbol_to_ensembl(genes)
-            mapped_genes, ensembl_ids = zip(*[(k, v["ensembl"]) for k, v in result.items() if v["status"]=="mapped"])
-            df = df[df.iloc[:,0].isin(mapped_genes)] # keep converted rows
-            df["ensembl"] = ensembl_ids
+            mapped_dict = {k:v["ensembl"] for k, v in result.items() if v["status"]=="mapped"}
+            df["ensembl"] = ""
             
+            for index, row in df.iterrows():
+                if row.iloc[0] in mapped_dict.keys():
+                    val = mapped_dict[row.iloc[0]]
+                else:
+                    val = NaN
+                df.at[index,"ensembl"] = val
+
         for index, row in df.iterrows():
 
             print(row['ensembl'])
