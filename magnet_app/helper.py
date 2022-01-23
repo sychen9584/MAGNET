@@ -150,9 +150,13 @@ def form_processing(request, form):
         user_background = list(filter(None, handle_csv(user_background_upload, one_or_multiple, True)))
     elif one_or_multiple=="Example":
         user_background = example.background
-    else:
+    elif user_background:
         user_background = list(filter(None, form.cleaned_data['user_background'].split("\n")))
         user_background = [b.strip().upper() for b in user_background]
+    else:
+        user_background = [g.ensembl_id for g in Gene.objects.all()]
+        print(user_background)
+
 
     if user_dataset_upload:
         user_dataset = handle_dataset_csv(user_dataset_upload)

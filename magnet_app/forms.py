@@ -63,8 +63,8 @@ class UserForm(forms.Form):
         if not user_genes and not user_genes_upload and one_or_multiple != "Example":
             raise forms.ValidationError('Please submit at least one query gene list!')
             
-        if not user_background and not user_background_upload and one_or_multiple != "Example":
-            raise forms.ValidationError('Please submit the background gene list!')
+        #if not user_background and not user_background_upload and one_or_multiple != "Example":
+            #raise forms.ValidationError('Please submit the background gene list!')
 
         if not user_selected_datasets and not user_dataset_upload:
             raise forms.ValidationError('Please select a dataset to test against or upload your own!')
