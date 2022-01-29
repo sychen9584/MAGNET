@@ -155,7 +155,6 @@ def form_processing(request, form):
         user_background = [b.strip().upper() for b in user_background]
     else:
         user_background = [g.ensembl_id for g in Gene.objects.all()]
-        print(user_background)
 
 
     if user_dataset_upload:
@@ -423,7 +422,10 @@ def dash_generate_heatmaps(dataset_df, is_user,
             hd=[]
             if gradient_check:
                 for p in ps:
-                    hd.append(np.log10(p))
+                    if p == 0:
+                        hd.append(-10)
+                    else:
+                        hd.append(np.log10(p))
             else:
                 for p in ps:
                     if p < low_dict[low_cutoff]:
@@ -454,7 +456,7 @@ def dash_generate_heatmaps(dataset_df, is_user,
         if gradient_check:
             colorscale = "Viridis"
             reversescale=True
-            showscale=True
+            showscale=False
         else:
             colorscale = dash_heatmap_colorscale(heatmap_data)
             reversescale=False
@@ -477,6 +479,8 @@ def dash_generate_heatmaps(dataset_df, is_user,
                         ))
 
         fig.update_traces(colorbar_thickness=15, selector=dict(type='heatmap'))
+        if gradient_check:
+            fig.update_traces(zmin=-10,zmax=0.5)
         fig.update_layout(
             xaxis={'title':'Dataset Gene Sets', 'title_font_size':14, 'tickfont_size':15},
             yaxis={'title':'Query Gene Lists', 'title_font_size':14, 'tickfont_size':15},
