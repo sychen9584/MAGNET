@@ -35,7 +35,11 @@ class Dataset(models.Model):
     journal = models.CharField(max_length=100, blank=True)
     link_to_pubmed = models.URLField(blank=True)
     abstract = models.TextField(blank=True)
-    figure_info = models.TextField(blank=True)
+    genomic_assay = models.CharField(max_length=200, blank=True)
+    samples = models.TextField(blank=True)
+    method = models.CharField(max_length=200, blank=True)
+    figure_source = models.CharField(max_length=200, blank=True)
+    data_source = models.CharField(max_length=200, blank=True)
     
     class Meta:
         ordering = ["dataset_name"]

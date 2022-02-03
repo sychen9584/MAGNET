@@ -49,6 +49,26 @@
             <div class='col-5'></div>
         </div>
     </div>
+
+    <div class="container">
+        <p class="h3 mb-3">Dataset information:</p>
+        <table class='table table-bordered table-hover'>
+            <tbody>
+                <tr><th class="table-active" scope="row" style="width: 25%">Genomic assay</th>
+                    <td style="width: 25%">{{dataset.genomic_assay}}</td>
+                    <th class="table-active" scope="row" style="width: 25%">Samples</th>
+                    <td style="width: 25%">{{dataset.samples}}</td></tr>
+                <tr><th class="table-active" scope="row" style="width: 25%">Method for deriving gene sets</th>
+                    <td style="width: 25%">{{dataset.method}}</td>
+                    <th class="table-active" scope="row" style="width: 25%">Number of gene sets</th>
+                    <td style="width: 25%">{{dataset.cluster_set.count}}</td></tr>
+                <tr><th class="table-active" scope="row" style="width: 25%">Figure source</th>
+                     <td style="width: 25%">{{dataset.figure_source}}</td>
+                     <th class="table-active" scope="row" style="width: 25%">Data source</th>
+                     <td style="width: 25%">{{dataset.data_source}}</td></tr>
+            </tbody>
+        </table>
+    </div>
     
     <div class="container">
        <p class="h3 mb-3">Associated gene sets:</p>
@@ -65,10 +85,10 @@
                     <td> {{cluster.cluster_description}} </td>
                     <td> {{gene_num}} </td></tr>
                 {% endfor %}
-            </tbody></table>
+            </tbody>
+        </table>
             
             <p class="font-weight-bold">A total of {{total_gene_num}} genes are associated with this dataset.</p>
-            <p>Data is retrieved from {{dataset.figure_info}}.</p>
         
         </div>
     </body>

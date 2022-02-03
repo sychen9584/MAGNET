@@ -18,7 +18,11 @@ class DatasetAdmin(admin.ModelAdmin):
                                'publication_year',
                                'journal',
                                'link_to_pubmed',
-                               'figure_info']
+                               'genomic_assay',
+                               'samples',
+                               'method',
+                               'figure_source',
+                               'data_source']
                     }),
     ]
 
