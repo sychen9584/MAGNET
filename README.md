@@ -23,4 +23,5 @@ demonstrate that MAGNET provides relevant and unique results that complement wel
 conventional enrichment analysis tools. Although specific to macrophage datasets, we envision
 MAGNET will catalyze developments of similar applications in other domains of interest.
 
-![image](https://user-images.githubusercontent.com/20377476/164351179-a7b7eeab-716b-44f3-8ed4-8394e4dbef05.png)
+![image](https://user-images.githubusercontent.com/20377476/164351275-c15adfa1-bac2-4013-a5d9-72d4fac48a4b.png)
+
